@@ -97,3 +97,11 @@ Se reemplazó el nombre de usuario del registro por DNI peruano de 8 dígitos (s
 El login conserva temporalmente su contrato `username` porque el backend no implementa identidad aún. Antes de habilitar autenticación real, acordar acceso con DNI, unicidad y selección de tienda si un documento tiene cuentas en varios comercios; no confundir el DNI con un código de vinculación o una autorización. El siguiente avance de identidad deberá actualizar login y API de forma coordinada.
 
 Vincular tienda: propuesta pendiente de backend. La tienda emitiría una invitación; el cliente ingresaría el código; el servidor verificaría existencia, vigencia y autorización, mostraría el negocio correspondiente y registraría la asociación solo después de validar la identidad y/o aprobación del vendedor. No enlazar al cliente con una deuda existente solo por conocer DNI y código. Este avance solo aclara el texto del campo; no implementa invitaciones ni asociaciones reales.
+
+## Avance 05: cuenta de cliente independiente (sustituye la propuesta de vinculación anterior)
+
+Por decisión del usuario se elimina `storeCode` de la interfaz, validación y contrato de registro. El cliente se registra con sus datos personales y puede explorar tiendas y productos sin asociarse previamente a un comercio. Los apartados anteriores que proponen invitaciones/códigos son históricos y quedan descartados.
+
+La identidad del cliente es global. Las condiciones y deudas continúan siendo específicas de cada tienda; registrarse o explorar productos no concede una línea de crédito ni acceso a información de otros clientes. El backend deberá separar la cuenta global de las relaciones comerciales por tienda, revisar el modelo usuario/cliente y determinar cómo se solicita/autoriza crédito al comprar.
+
+El catálogo de tiendas y productos global aún no está implementado en este frontend. El backend recibido expone productos por tienda (`/api/v1/stores/{storeId}/products`), pero no lista tiendas ni implementa identidad global. Para completar la navegación posterior al registro hacen falta el alta real de cuenta, un listado de tiendas y una vista de catálogo que use los endpoints de productos. No simular registro exitoso ni conceder permisos por selección de perfil.

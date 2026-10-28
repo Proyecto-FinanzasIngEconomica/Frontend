@@ -288,3 +288,13 @@
     flex-wrap: wrap;
   }
 }
+
+.client-registration-note {
+  margin: 0 0 24px;
+  padding: 15px 17px;
+  background: #f5f9ff;
+  border-radius: 7px;
+  color: #52677d;
+  font-size: 14px;
+  line-height: 1.7;
+}

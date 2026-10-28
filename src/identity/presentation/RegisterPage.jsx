@@ -14,7 +14,6 @@ const initialValues = {
   confirmPassword: '',
   businessName: '',
   ruc: '',
-  storeCode: '',
 };
 const options = [
   {
@@ -28,8 +27,8 @@ const options = [
     value: ACCOUNT_TYPES.CLIENT,
     title: 'Soy cliente',
     icon: 'user',
-    description: 'Consulta tus compras, revisa tus cuotas y mantén tus cuentas al día.',
-    features: ['Consulta tu crédito disponible', 'Revisa tus fechas de pago'],
+    description: 'Descubre tiendas y productos. Compra y consulta tus créditos desde tu cuenta.',
+    features: ['Explora tiendas y productos', 'Regístrate sin códigos de tienda'],
   },
 ];
 
@@ -45,7 +44,7 @@ export function RegisterPage({ registerAccount }) {
   const seller = values.accountType === ACCOUNT_TYPES.SELLER;
 
   function selectType(value) {
-    setValues((old) => ({ ...old, accountType: value, businessName: '', ruc: '', storeCode: '' }));
+    setValues((old) => ({ ...old, accountType: value, businessName: '', ruc: '' }));
     setErrors({});
   }
   function field(name) {
@@ -80,7 +79,9 @@ export function RegisterPage({ registerAccount }) {
       } else {
         setValues((old) => ({ ...old, password: '', confirmPassword: '' }));
         setMessage(
-          'Solicitud recibida. Revisa las instrucciones que te proporcione tu tienda o el administrador.',
+          seller
+            ? 'Solicitud recibida. El administrador revisará el alta de tu negocio.'
+            : 'Cuenta creada. Ya puedes explorar tiendas y productos.',
         );
       }
     } catch (error) {
@@ -239,14 +240,10 @@ export function RegisterPage({ registerAccount }) {
                     {...field('confirmPassword')}
                   />
                 </div>
-                <div className="business-fields">
-                  <h2>{seller ? 'Datos de tu negocio' : 'Vincula tu tienda'}</h2>
-                  <p>
-                    {seller
-                      ? 'Tu solicitud de vendedor estará sujeta a la validación del administrador.'
-                      : 'El código identifica la tienda donde compras al crédito. Pídeselo a tu vendedor; la vinculación deberá ser validada por la tienda.'}
-                  </p>
-                  {seller ? (
+                {seller ? (
+                  <div className="business-fields">
+                    <h2>Datos de tu negocio</h2>
+                    <p>Tu solicitud de vendedor estará sujeta a la validación del administrador.</p>
                     <div className="registration-grid">
                       <FormField
                         name="businessName"
@@ -265,17 +262,13 @@ export function RegisterPage({ registerAccount }) {
                         {...field('ruc')}
                       />
                     </div>
-                  ) : (
-                    <FormField
-                      name="storeCode"
-                      label="Código de tienda"
-                      maxLength={32}
-                      placeholder="Ej. TIENDA-1234"
-                      hint="El código será verificado al habilitar el registro."
-                      {...field('storeCode')}
-                    />
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <p className="client-registration-note">
+                    Tu cuenta es independiente de las tiendas. No necesitas un código para
+                    registrarte y explorar sus productos.
+                  </p>
+                )}
                 {message && (
                   <div className="form-alert" role="alert">
                     {message}

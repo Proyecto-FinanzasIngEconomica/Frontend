@@ -19,11 +19,6 @@ export function validateRegistration(data) {
       errors.businessName = 'Ingresa el nombre de tu negocio (máximo 100 caracteres).';
     if (!/^\d{11}$/.test(data.ruc.trim())) errors.ruc = 'Ingresa los 11 dígitos del RUC.';
   }
-  if (
-    data.accountType === ACCOUNT_TYPES.CLIENT &&
-    !/^[a-zA-Z0-9-]{4,32}$/.test(data.storeCode.trim())
-  )
-    errors.storeCode = 'Ingresa el código que te proporcionó tu tienda (4 a 32 caracteres).';
   return errors;
 }
 
@@ -38,5 +33,5 @@ export function toRegistrationRequest(data) {
   };
   return data.accountType === ACCOUNT_TYPES.SELLER
     ? { ...common, businessName: data.businessName.trim(), ruc: data.ruc.trim() }
-    : { ...common, storeCode: data.storeCode.trim() };
+    : common;
 }
