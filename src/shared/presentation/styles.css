@@ -4,7 +4,7 @@
   background: #f6f8fc;
   font-synthesis: none;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   --blue: #0865bd;
   --muted: #6d788a;
   --border: #e5eaf2;
@@ -49,7 +49,8 @@ svg {
   flex-direction: column;
 }
 .site-header {
-  height: 83px;
+  height: 96px;
+  flex-shrink: 0;
   padding: 0 42px;
   display: flex;
   align-items: center;
@@ -64,8 +65,8 @@ svg {
   text-decoration: none;
 }
 .brand-symbol {
-  width: 43px;
-  height: 43px;
+  width: 52px;
+  height: 52px;
   border-radius: 10px;
   background: var(--blue);
   display: grid;
@@ -75,14 +76,14 @@ svg {
 }
 .brand-name {
   display: block;
-  font-size: 23px;
+  font-size: 28px;
   font-weight: 750;
   letter-spacing: -0.8px;
   color: #085ba8;
 }
 .brand-caption {
   display: block;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1.15px;
   font-weight: 600;
   color: #6d788a;
@@ -92,7 +93,7 @@ svg {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 16px;
   color: #7b8799;
 }
 .status-dot {
@@ -116,22 +117,22 @@ svg {
 .eyebrow {
   color: #4277a8;
   letter-spacing: 2px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
 }
 .welcome p {
-  font-size: 15px;
+  font-size: 18px;
   color: #758195;
   margin: 10px 0 0;
 }
 .login-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 540px;
   border: 1px solid #e6eaf0;
   border-top: 4px solid var(--blue);
   border-radius: 9px;
   background: #fff;
-  padding: 30px 33px 0;
+  padding: 32px 40px 0;
   box-shadow:
     0 8px 30px #1b3d6110,
     0 1px 2px #1b3d6105;
@@ -139,8 +140,8 @@ svg {
 .entry-icon {
   display: grid;
   place-items: center;
-  width: 43px;
-  height: 43px;
+  width: 52px;
+  height: 52px;
   background: #edf5ff;
   color: var(--blue);
   border-radius: 11px;
@@ -148,7 +149,7 @@ svg {
 }
 .card-intro h1 {
   margin: 0;
-  font-size: 25px;
+  font-size: 32px;
   letter-spacing: -0.9px;
   line-height: 1.3;
   font-weight: 650;
@@ -157,8 +158,8 @@ svg {
   color: #6d788a;
   line-height: 1.75;
   margin: 10px 0 28px;
-  font-size: 13px;
-  max-width: 310px;
+  font-size: 16px;
+  max-width: 440px;
 }
 .form-field {
   margin-bottom: 22px;
@@ -168,11 +169,11 @@ svg {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 9px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 600;
 }
 .label-row > span {
-  font-size: 10px;
+  font-size: 13px;
   color: #8590a0;
   font-weight: 400;
 }
@@ -180,7 +181,7 @@ svg {
   display: flex;
   align-items: center;
   gap: 11px;
-  min-height: 47px;
+  min-height: 58px;
   background: #f4f6fa;
   border: 1px solid #e8edf4;
   border-radius: 5px;
@@ -204,7 +205,7 @@ svg {
   color: #253247;
   outline: none;
   padding: 13px 0;
-  font-size: 12px;
+  font-size: 16px;
 }
 .input-wrap input:focus-visible {
   outline: none;
@@ -218,8 +219,8 @@ svg {
   color: #7a889b;
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 5px;
   padding: 4px;
 }
@@ -230,7 +231,7 @@ svg {
 .password-toggle {
   margin-right: -5px;
   flex-shrink: 0;
-  min-width: 32px;
+  min-width: 40px;
 }
 .form-options {
   display: flex;
@@ -238,21 +239,21 @@ svg {
   justify-content: space-between;
   gap: 10px;
   margin: -1px 0 27px;
-  font-size: 10px;
+  font-size: 13px;
 }
 .credential-note {
   display: flex;
   align-items: center;
   gap: 5px;
   color: #8190a2;
-  font-size: 10px;
+  font-size: 13px;
 }
 .text-button {
   border: 0;
   background: none;
   color: #0865bd;
   font-weight: 600;
-  font-size: 11px;
+  font-size: 14px;
   padding: 4px 0;
   display: inline-flex;
   gap: 5px;
@@ -267,13 +268,13 @@ svg {
   border-radius: 5px;
   color: #fff;
   width: 100%;
-  min-height: 45px;
+  min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 16px;
   transition: background 0.15s;
 }
 .primary-button:hover:not(:disabled) {
@@ -288,14 +289,14 @@ svg {
   margin-top: 29px;
   padding: 22px 0 24px;
   color: #7d8796;
-  font-size: 11px;
+  font-size: 14px;
 }
 .access-note {
   display: flex;
   align-items: center;
   gap: 7px;
   color: #8b96a7;
-  font-size: 11px;
+  font-size: 14px;
   margin-top: 23px;
 }
 .site-footer {
@@ -304,12 +305,12 @@ svg {
   margin: 0 42px;
   padding: 21px 0;
   border-top: 1px solid #e6ebf2;
-  font-size: 10px;
+  font-size: 13px;
   color: #909bac;
 }
 .field-error {
   color: #b43434;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.5;
   margin: 6px 0 0;
 }
@@ -322,7 +323,7 @@ svg {
   color: #335777;
   border: 1px solid #dce9f7;
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.65;
   margin: -7px 0 18px;
 }
@@ -330,7 +331,7 @@ svg {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 26px;
-  max-width: 400px;
+  max-width: 480px;
   width: calc(100% - 40px);
   color: #253247;
   box-shadow: 0 24px 80px #132c5730;
@@ -347,12 +348,12 @@ svg {
   color: var(--blue);
 }
 .help-dialog h2 {
-  font-size: 20px;
+  font-size: 25px;
   letter-spacing: -0.5px;
 }
 .help-dialog p {
   color: #6d788a;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.8;
   margin-bottom: 25px;
 }
@@ -393,8 +394,8 @@ svg {
 }
 @media (min-width: 1400px) {
   .login-main {
-    padding-top: 65px;
-    padding-bottom: 65px;
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
 }
 @media (max-width: 520px) {
@@ -406,10 +407,10 @@ svg {
     display: none;
   }
   .brand-name {
-    font-size: 21px;
+    font-size: 26px;
   }
   .brand-caption {
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: 0.8px;
   }
   .brand-symbol {
@@ -417,13 +418,13 @@ svg {
     height: 39px;
   }
   .login-main {
-    padding: 33px 18px;
+    padding: 28px 18px;
   }
   .welcome {
     margin-bottom: 23px;
   }
   .welcome p {
-    font-size: 13px;
+    font-size: 16px;
   }
   .login-card {
     padding: 27px 24px 0;
@@ -431,7 +432,7 @@ svg {
   .site-footer {
     margin: 0 20px;
     padding: 18px 0;
-    font-size: 9px;
+    font-size: 12px;
   }
   .form-options {
     gap: 6px;
@@ -441,7 +442,7 @@ svg {
     flex-wrap: wrap;
   }
   .text-button {
-    min-height: 32px;
+    min-height: 40px;
   }
   .password-toggle {
     min-height: 38px;
@@ -450,10 +451,10 @@ svg {
     font-size: 16px;
   }
   .input-wrap input::placeholder {
-    font-size: 12px;
+    font-size: 16px;
   }
   .credential-note {
-    font-size: 9px;
+    font-size: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
