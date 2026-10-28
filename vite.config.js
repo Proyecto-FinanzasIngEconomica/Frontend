@@ -8,7 +8,9 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 5173,
       strictPort: true,
-      proxy: { '/api': { target: env.API_PROXY_TARGET || 'http://localhost:8080', changeOrigin: true } },
+      proxy: {
+        '/api': { target: env.API_PROXY_TARGET || 'http://localhost:8080', changeOrigin: true },
+      },
     },
   };
 });
