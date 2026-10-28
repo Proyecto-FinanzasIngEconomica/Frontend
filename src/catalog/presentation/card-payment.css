@@ -1,0 +1,99 @@
+.card-payment-fields {
+  border: 1px solid #dde6f3;
+  border-radius: 7px;
+  padding: 20px;
+  margin: 20px 0;
+}
+.card-payment-fields legend {
+  color: #006bc8;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0 8px;
+}
+.card-payment-note {
+  color: #677080;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+.card-payment-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: #596171;
+}
+.card-payment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 18px 0;
+}
+.card-full {
+  grid-column: 1 / -1;
+}
+.card-payment-fields input:not([type='checkbox']),
+.card-payment-fields select {
+  padding: 12px;
+  border: 1px solid #dce5f2;
+  border-radius: 5px;
+  background: #f9fbff;
+  font: inherit;
+  font-size: 14px;
+  color: #303640;
+  min-width: 0;
+}
+.card-payment-fields input:focus-visible {
+  outline: 2px solid #006bc8;
+  outline-offset: 2px;
+}
+.card-payment-fields .card-remember {
+  flex-direction: row;
+  align-items: center;
+  margin: 20px 0;
+  line-height: 1.6;
+}
+.card-remember input {
+  accent-color: #006bc8;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.card-payment-fields > button {
+  font-size: 12px;
+}
+.card-payment-message {
+  padding: 12px;
+  background: #eef5ff;
+  color: #41617f;
+  font-size: 12px;
+  line-height: 1.6;
+  border-radius: 5px;
+}
+.card-saved {
+  background: #f1f5fc;
+  border-radius: 5px;
+  padding: 16px;
+  margin-top: 16px;
+}
+.card-saved p {
+  color: #006bc8;
+  font-weight: 600;
+  font-size: 14px;
+}
+.card-saved small {
+  display: block;
+  color: #677080;
+  line-height: 1.6;
+}
+.card-saved button {
+  margin-top: 12px;
+}
+@media (max-width: 460px) {
+  .card-payment-grid {
+    grid-template-columns: 1fr;
+  }
+  .card-payment-fields {
+    padding: 14px;
+  }
+}

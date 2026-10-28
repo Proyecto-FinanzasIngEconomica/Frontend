@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Icon } from '../../shared/presentation/Icon.jsx';
 import { filterCatalog } from '../application/loadCatalog.js';
 import './catalog.css';
+import { PurchaseSummaryPage } from './PurchaseSummaryPage.jsx';
 
 const money = (amount, currency) =>
   new Intl.NumberFormat('es-PE', { style: 'currency', currency }).format(amount);
@@ -12,7 +13,7 @@ function CatalogImage({ src, alt, fallback }) {
   );
 }
 
-export function CatalogPage({ loadStores, loadProducts }) {
+export function CatalogPage({ loadStores, loadProducts, customerName }) {
   const [stores, setStores] = useState([]);
   const [products, setProducts] = useState([]);
   const [store, setStore] = useState(null);
@@ -23,6 +24,7 @@ export function CatalogPage({ loadStores, loadProducts }) {
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
   const [action, setAction] = useState(null);
+  const [purchase, setPurchase] = useState(null);
   const dialog = useRef(null);
   const heading = useRef(null);
   useEffect(() => {
@@ -48,7 +50,7 @@ export function CatalogPage({ loadStores, loadProducts }) {
   }, [store, loadStores, loadProducts, retry]);
   useEffect(() => {
     if (action) dialog.current.showModal();
-    else dialog.current.close();
+    else dialog.current?.close();
   }, [action]);
   function selectStore(next) {
     setStore(next);
@@ -64,6 +66,19 @@ export function CatalogPage({ loadStores, loadProducts }) {
   const items = filterCatalog(allItems, query).filter(
     (item) => category === 'Todos' || item.category === category,
   );
+  if (purchase) {
+    return (
+      <PurchaseSummaryPage
+        product={purchase.product}
+        initialMethod={purchase.method}
+        customerName={customerName}
+        onBack={() => {
+          setPurchase(null);
+          window.scrollTo(0, 0);
+        }}
+      />
+    );
+  }
   return (
     <section className="catalog-view" aria-labelledby="catalog-heading">
       {store && (
@@ -216,14 +231,20 @@ export function CatalogPage({ loadStores, loadProducts }) {
                   <div className="product-actions">
                     <button
                       className="primary-button"
-                      onClick={() => setAction({ product: item, type: 'buy' })}
+                      onClick={() => {
+                        setPurchase({ product: item, method: 'cash' });
+                        window.scrollTo(0, 0);
+                      }}
                     >
                       <Icon name="cart" size={17} />
                       Comprar
                     </button>
                     <button
                       className="secondary-button"
-                      onClick={() => setAction({ product: item, type: 'simulate' })}
+                      onClick={() => {
+                        setPurchase({ product: item, method: 'financed' });
+                        window.scrollTo(0, 0);
+                      }}
                     >
                       <Icon name="sliders" size={17} />
                       Simular cuotas

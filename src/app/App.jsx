@@ -3,6 +3,7 @@ import { LoginPage } from '../identity/presentation/LoginPage.jsx';
 import { RegisterPage } from '../identity/presentation/RegisterPage.jsx';
 import { DashboardPage } from '../dashboard/presentation/DashboardPage.jsx';
 import { signIn, registerAccount, identity, localMode } from './dependencies.js';
+import { MerchantDashboard } from '../merchant/presentation/MerchantDashboard.jsx';
 
 export function App() {
   const [hash, setHash] = useState(window.location.hash);
@@ -35,9 +36,10 @@ export function App() {
     document.title = `${session ? 'Inicio' : registration ? 'Crear cuenta' : 'Iniciar sesión'} · CrediFlow`;
     window.scrollTo(0, 0);
   }, [registration, session]);
+  const SignedInPage = session?.user.accountType === 'SELLER' ? MerchantDashboard : DashboardPage;
   if (session)
     return (
-      <DashboardPage
+      <SignedInPage
         session={session}
         identity={identity}
         localMode={localMode}

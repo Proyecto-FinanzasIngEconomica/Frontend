@@ -1,0 +1,83 @@
+.account-financing-list,
+.account-payment-list {
+  padding: 22px;
+}
+.account-financing {
+  border: 1px solid #e2e9f4;
+  border-radius: 8px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+.account-product,
+.account-payment {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.account-product img,
+.account-payment img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  background: #eff4fc;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.account-financings h3 {
+  margin: 0 0 7px;
+  font-size: 16px;
+}
+.account-financings p {
+  color: #677080;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.account-financing dl {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 24px 0;
+}
+.account-financing dt {
+  font-size: 11px;
+  color: #677080;
+  margin-bottom: 8px;
+}
+.account-financing dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.account-financings button {
+  font-size: 12px;
+}
+.account-payment {
+  padding: 20px 0;
+  border-bottom: 1px solid #e2e9f4;
+}
+.account-payment span {
+  font-size: 12px;
+  color: #006bc8;
+}
+.account-payment-actions {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.account-empty {
+  text-align: center;
+  padding: 36px;
+}
+@media (max-width: 650px) {
+  .account-financing dl {
+    grid-template-columns: 1fr 1fr;
+  }
+  .account-payment {
+    flex-wrap: wrap;
+  }
+  .account-payment-actions {
+    margin-left: 0;
+    width: 100%;
+  }
+}

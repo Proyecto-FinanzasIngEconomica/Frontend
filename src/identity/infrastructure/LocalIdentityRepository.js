@@ -102,6 +102,22 @@ export class LocalIdentityRepository extends AuthRepository {
     if (session) this.record(session.user, 'LOGOUT');
   }
 
+  updateContact({ phone }) {
+    const session = this.getSession();
+    if (!session) throw new Error('Inicia sesión para editar tu perfil.');
+    const normalized = String(phone || '').trim();
+    if (normalized && !/^\+?[\d\s()-]{7,20}$/.test(normalized))
+      throw new Error('Ingresa un teléfono válido (7 a 15 dígitos).');
+    const digits = normalized.replace(/\D/g, '');
+    if (normalized && (digits.length < 7 || digits.length > 15))
+      throw new Error('Ingresa un teléfono válido (7 a 15 dígitos).');
+    const users = this.read(USERS, []);
+    const user = users.find((entry) => entry.id === session.user.id);
+    user.phone = normalized;
+    this.write(USERS, users);
+    return this.publicUser(user);
+  }
+
   record(user, action) {
     this.write(
       EVENTS,

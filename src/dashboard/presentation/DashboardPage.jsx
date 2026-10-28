@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { AccountFinancings } from './AccountFinancings.jsx';
+import { FinancingPaymentsPage } from '../../catalog/presentation/FinancingPaymentsPage.jsx';
 import { Icon } from '../../shared/presentation/Icon.jsx';
 import './dashboard.css';
 import { CatalogPage } from '../../catalog/presentation/CatalogPage.jsx';
 import { loadStores, loadProducts } from '../../app/dependencies.js';
+import { ProfilePage } from '../../identity/presentation/ProfilePage.jsx';
 
 const tabs = [
   ['inicio', 'Inicio'],
@@ -13,6 +16,7 @@ const tabs = [
 
 export function DashboardPage({ session, onSignOut, identity, localMode }) {
   const [view, setView] = useState('inicio');
+  const [selectedFinancing, setSelectedFinancing] = useState(null);
   const user = session.user;
   const titles = {
     inicio: 'Inicio',
@@ -22,7 +26,9 @@ export function DashboardPage({ session, onSignOut, identity, localMode }) {
     actividad: 'Mi actividad',
   };
   function navigate(next) {
+    setSelectedFinancing(null);
     setView(next);
+    window.scrollTo(0, 0);
   }
   return (
     <div className="app-shell dashboard-shell">
@@ -49,7 +55,7 @@ export function DashboardPage({ session, onSignOut, identity, localMode }) {
           ))}
         </nav>
         <div className="dashboard-user">
-          <button className="profile-button" onClick={() => navigate('actividad')}>
+          <button className="profile-button" onClick={() => navigate('perfil')}>
             <span>
               <strong>{user.fullName || user.email}</strong>
               <small>{user.accountType === 'SELLER' ? 'VENDEDOR' : 'CLIENTE'}</small>
@@ -73,7 +79,7 @@ export function DashboardPage({ session, onSignOut, identity, localMode }) {
             <span>Datos guardados únicamente en este navegador</span>
           </div>
         )}
-        {view !== 'catalogo' && (
+        {!selectedFinancing && view !== 'catalogo' && view !== 'perfil' && (
           <div className="dashboard-title">
             <div>
               <span className="eyebrow">MI CUENTA</span>
@@ -88,7 +94,7 @@ export function DashboardPage({ session, onSignOut, identity, localMode }) {
                       : 'Toda la información de tus operaciones, en un solo lugar.'}
               </p>
             </div>
-            {view !== 'catalogo' && (
+            {!selectedFinancing && view !== 'catalogo' && (
               <button className="catalog-button" onClick={() => navigate('catalogo')}>
                 <Icon name="store" size={18} />
                 Ir al catálogo
@@ -97,108 +103,42 @@ export function DashboardPage({ session, onSignOut, identity, localMode }) {
             )}
           </div>
         )}
-        {view === 'inicio' && (
-          <>
-            <div className="summary-grid">
-              <Summary
-                label="Financiamientos activos"
-                value="0"
-                icon="list"
-                note="Aún no tienes financiamientos"
-              />
-              <Summary
-                label="Saldo pendiente"
-                value="S/ 0.00"
-                icon="wallet"
-                note="Sin obligaciones registradas"
-              />
-              <Summary
-                label="Próximo pago"
-                value="Sin pagos"
-                icon="calendar"
-                note="Tus próximos vencimientos aparecerán aquí"
-                accent
-              />
-            </div>
-            <section className="dashboard-panel">
-              <div className="panel-heading">
-                <div>
-                  <h2>
-                    <Icon name="folder" />
-                    Mis financiamientos
-                  </h2>
-                  <p>Lista de créditos vigentes</p>
-                </div>
-                <span className="update-label">
-                  <span className="status-dot" />
-                  Actualizado en esta sesión
-                </span>
-              </div>
-              <div className="finance-table">
-                <table>
-                  <thead>
-                    <tr>
-                      {['PRODUCTO / TIENDA', 'MONTO', 'CUOTAS', 'ESTADO', 'ACCIÓN'].map((name) => (
-                        <th key={name}>{name}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colSpan={5}>
-                        <Empty
-                          icon="folder"
-                          title="Tu próximo proyecto empieza aquí"
-                          description="Cuando registres una compra al crédito, podrás seguir sus cuotas y fechas de pago desde este panel."
-                        >
-                          <button className="primary-button" onClick={() => navigate('catalogo')}>
-                            Explorar tiendas
-                            <Icon name="arrow" size={17} />
-                          </button>
-                        </Empty>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="panel-bottom">
-                <Icon name="shield" size={16} />
-                <span>Tus compras y financiamientos estarán organizados en un solo lugar.</span>
-              </div>
-            </section>
-            <div className="dashboard-shortcuts">
-              <div>
-                <h3>Todo a tu alcance</h3>
-                <p>Consulta tu cuenta cuando lo necesites.</p>
-              </div>
-              <button onClick={() => navigate('pagos')}>
-                <Icon name="calendar" />
-                Ver historial de pagos
-                <Icon name="arrow" size={16} />
-              </button>
-              <button onClick={() => navigate('actividad')}>
-                <Icon name="shield" />
-                Revisar mis accesos
-                <Icon name="arrow" size={16} />
-              </button>
-            </div>
-          </>
+        {selectedFinancing ? (
+          <FinancingPaymentsPage
+            key={selectedFinancing.id}
+            {...selectedFinancing}
+            financingId={selectedFinancing.id}
+            initialReceipts={selectedFinancing.receipts}
+            onBack={() => setSelectedFinancing(null)}
+          />
+        ) : (
+          ['inicio', 'financiamientos', 'pagos'].includes(view) && (
+            <AccountFinancings
+              key={view}
+              view={view}
+              onOpen={(record) => {
+                setSelectedFinancing(record);
+                window.scrollTo(0, 0);
+              }}
+              onCatalog={() => navigate('catalogo')}
+            />
+          )
         )}
-        {view === 'catalogo' && <CatalogPage loadStores={loadStores} loadProducts={loadProducts} />}
-        {(view === 'financiamientos' || view === 'pagos') && (
-          <section className="dashboard-panel">
-            <Empty
-              icon={view === 'pagos' ? 'calendar' : 'folder'}
-              title={
-                view === 'pagos' ? 'Aún no hay pagos registrados' : 'Aún no tienes financiamientos'
-              }
-              description="Las operaciones aparecerán aquí cuando se implemente el registro de compras y pagos."
-            >
-              <button className="secondary-button" onClick={() => navigate('catalogo')}>
-                Explorar tiendas
-              </button>
-            </Empty>
-          </section>
+        {view === 'catalogo' && (
+          <CatalogPage
+            loadStores={loadStores}
+            loadProducts={loadProducts}
+            customerName={user.fullName || user.email}
+          />
+        )}
+        {view === 'perfil' && (
+          <ProfilePage
+            user={user}
+            identity={identity}
+            onHome={() => navigate('inicio')}
+            onSignOut={onSignOut}
+            onActivity={() => navigate('actividad')}
+          />
         )}
         {view === 'actividad' && (
           <section className="dashboard-panel">

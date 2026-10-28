@@ -29,8 +29,13 @@ export const registerAccount = createRegisterAccount(
 
 import { LocalCatalogRepository } from '../catalog/infrastructure/LocalCatalogRepository.js';
 import { createLoadStores, createLoadProducts } from '../catalog/application/loadCatalog.js';
+import { MerchantRepository } from '../merchant/infrastructure/MerchantRepository.js';
+export const merchantRepository = new MerchantRepository(window.localStorage, () =>
+  identity.getSession(),
+);
 const catalogRepository = new LocalCatalogRepository({
-  listLocalStores: () => identity.listStores(),
+  listLocalStores: () => merchantRepository.publicStores(identity.listStores()),
+  listLocalProducts: (storeId) => merchantRepository.publicProducts(storeId),
 });
 export const loadStores = createLoadStores(catalogRepository);
 export const loadProducts = createLoadProducts(catalogRepository);
