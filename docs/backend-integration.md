@@ -2,6 +2,8 @@
 
 Revisión estática del archivo `backend-main.zip` facilitado el 28 de octubre de 2026. No se ejecutó el backend ni se verificó una base de datos activa. Esta revisión no modifica su código ni certifica su seguridad.
 
+> Estado vigente (avance 06): el frontend usa identidad local temporal por solicitud del usuario. Los apartados de integración HTTP y avances previos describen contratos pendientes o decisiones históricas.
+
 ## Fuente real frente al informe
 
 El código incluye Spring Boot 4.1.1, Java 25 y el conector MySQL. El PDF indicaba Spring Boot 3.5.8 y PostgreSQL. Para esta entrega se toma el código como referencia de contratos HTTP; debe confirmarse qué motor se mantendrá. El frontend no depende del motor de persistencia.
@@ -105,3 +107,15 @@ Por decisión del usuario se elimina `storeCode` de la interfaz, validación y c
 La identidad del cliente es global. Las condiciones y deudas continúan siendo específicas de cada tienda; registrarse o explorar productos no concede una línea de crédito ni acceso a información de otros clientes. El backend deberá separar la cuenta global de las relaciones comerciales por tienda, revisar el modelo usuario/cliente y determinar cómo se solicita/autoriza crédito al comprar.
 
 El catálogo de tiendas y productos global aún no está implementado en este frontend. El backend recibido expone productos por tienda (`/api/v1/stores/{storeId}/products`), pero no lista tiendas ni implementa identidad global. Para completar la navegación posterior al registro hacen falta el alta real de cuenta, un listado de tiendas y una vista de catálogo que use los endpoints de productos. No simular registro exitoso ni conceder permisos por selección de perfil.
+
+## Avance 06: correo, identidad local y dashboard
+
+El acceso usa `{email, password}`. Correo normalizado a minúsculas. Registro y login funcionan temporalmente sin servidor mediante `LocalIdentityRepository`, seleccionado en el punto de composición `src/app/dependencies.js`. `VITE_IDENTITY_PROVIDER=local` es el valor por defecto. El adaptador HTTP queda separado y ahora recibe correo, por lo que el backend deberá acordar ese cambio antes de habilitarlo.
+
+Las claves locales son `crediflow.local.users.v1`, `crediflow.local.session.v1` y `crediflow.local.events.v1`. Cuentas guardadas con PBKDF2-SHA256, 210000 iteraciones y sal aleatoria de 16 bytes. No se guarda la contraseña original. Se guardan los datos del perfil, hash, sal, identificador de sesión y hasta 100 eventos de entrada/salida. La sesión persiste al recargar; «Cerrar sesión» la elimina. Cerrar una pestaña o navegador NO equivale a un evento de cierre de sesión. Las pestañas del mismo origen sincronizan sesión mediante el evento storage.
+
+Es un mecanismo de demostración local, manipulable desde el navegador; no constituye autenticación ni autorización segura de producción. Las cuentas no se comparten con otros dispositivos, perfiles, dominios o puertos y se pierden si se borran los datos del sitio. Usar datos de prueba. No incluir registros del navegador en Git. La aprobación de vendedores se simula solo como acceso local, sin efectos en el backend.
+
+Dashboard: saludo de la cuenta autenticada, tres indicadores (financiamientos activos, saldo y próximo pago), tabla vacía de financiamientos, navegación a tiendas/productos, historial de pagos y actividad. Los saldos empiezan en cero y no se inventan operaciones financieras. Las tiendas corresponden a cuentas locales SELLER, mostrando únicamente id y nombre del negocio. Todavía no hay gestión de productos ni compras: las vistas muestran estados vacíos claros.
+
+Migración: seleccionar `VITE_IDENTITY_PROVIDER=http`, completar registro, login por correo, recuperación de sesión, logout y adaptadores de consultas reales; sustituir las operaciones temporales de `identity`. No activar HTTP como si la integración estuviera completa: por ahora no restaura sesiones ni registra cuentas. Retirar las tres claves locales y el adaptador local al finalizar la migración. El historial local es una ayuda de pruebas, no auditoría inmutable.

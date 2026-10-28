@@ -5,7 +5,7 @@ export function createSignIn(authRepository) {
     const errors = validateCredentials(credentials);
     if (Object.keys(errors).length) return { ok: false, errors };
     const session = await authRepository.signIn({
-      username: credentials.username.trim(),
+      email: credentials.email.trim().toLowerCase(),
       password: credentials.password,
     });
     return { ok: true, session };

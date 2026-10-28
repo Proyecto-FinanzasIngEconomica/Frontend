@@ -32,7 +32,7 @@ const options = [
   },
 ];
 
-export function RegisterPage({ registerAccount }) {
+export function RegisterPage({ registerAccount, onRegistered, localMode }) {
   const [values, setValues] = useState(initialValues);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
@@ -78,6 +78,7 @@ export function RegisterPage({ registerAccount }) {
         );
       } else {
         setValues((old) => ({ ...old, password: '', confirmPassword: '' }));
+        onRegistered(values.email);
         setMessage(
           seller
             ? 'Solicitud recibida. El administrador revisará el alta de tu negocio.'
@@ -243,7 +244,11 @@ export function RegisterPage({ registerAccount }) {
                 {seller ? (
                   <div className="business-fields">
                     <h2>Datos de tu negocio</h2>
-                    <p>Tu solicitud de vendedor estará sujeta a la validación del administrador.</p>
+                    <p>
+                      {localMode
+                        ? 'En este modo de prueba podrás acceder como vendedor local.'
+                        : 'Tu solicitud de vendedor estará sujeta a la validación del administrador.'}
+                    </p>
                     <div className="registration-grid">
                       <FormField
                         name="businessName"
@@ -283,7 +288,9 @@ export function RegisterPage({ registerAccount }) {
                   <Icon name="arrow" size={18} />
                 </button>
                 <p className="registration-hint">
-                  El registro aún no está conectado al servidor. No se enviarán tus datos.
+                  {localMode
+                    ? 'Modo local: tu cuenta se guardará solo en este navegador. Usa datos de prueba.'
+                    : 'El registro aún no está conectado al servidor. No se enviarán tus datos.'}
                 </p>
               </form>
             </>

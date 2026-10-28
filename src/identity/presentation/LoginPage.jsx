@@ -3,8 +3,8 @@ import { Icon } from '../../shared/presentation/Icon.jsx';
 import { AuthLayout } from '../../shared/presentation/AuthLayout.jsx';
 import { HelpDialog } from '../../shared/presentation/HelpDialog.jsx';
 
-export function LoginPage({ signIn }) {
-  const [username, setUsername] = useState('');
+export function LoginPage({ signIn, onSignedIn, notice }) {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false);
   const [pending, setPending] = useState(false);
@@ -12,7 +12,7 @@ export function LoginPage({ signIn }) {
   const [message, setMessage] = useState('');
   const [session, setSession] = useState(null);
   const [help, setHelp] = useState(null);
-  const usernameRef = useRef(null);
+  const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const busy = useRef(false);
 
@@ -24,13 +24,14 @@ export function LoginPage({ signIn }) {
     setMessage('');
     setErrors({});
     try {
-      const result = await signIn({ username, password });
+      const result = await signIn({ email, password });
       if (!result.ok) {
         setErrors(result.errors);
-        (result.errors.username ? usernameRef : passwordRef).current?.focus();
+        (result.errors.email ? emailRef : passwordRef).current?.focus();
       } else {
         setPassword('');
         setSession(result.session);
+        onSignedIn(result.session);
       }
     } catch (error) {
       setMessage(error.message || 'Ocurrió un error. Vuelve a intentar.');
@@ -55,8 +56,8 @@ export function LoginPage({ signIn }) {
             <h1 id="login-title">{session ? 'Acceso verificado' : 'Iniciar sesión'}</h1>
             <p>
               {session
-                ? `Bienvenido, ${session.user.username || 'usuario'}.`
-                : 'Ingresa con tu usuario y contraseña para acceder a tu cuenta.'}
+                ? `Bienvenido, ${session.user.email || 'usuario'}.`
+                : 'Ingresa con tu correo y contraseña para acceder a tu cuenta.'}
             </p>
           </div>
 
@@ -73,36 +74,42 @@ export function LoginPage({ signIn }) {
             </div>
           ) : (
             <form noValidate onSubmit={handleSubmit} aria-busy={pending}>
+              {notice && (
+                <div className="form-alert" role="status">
+                  {notice}
+                </div>
+              )}
               <div className="form-field">
                 <div className="label-row">
-                  <label htmlFor="username">Nombre de usuario</label>
+                  <label htmlFor="email">Correo electrónico</label>
                   <span>Requerido</span>
                 </div>
-                <div className={`input-wrap ${errors.username ? 'invalid' : ''}`}>
+                <div className={`input-wrap ${errors.email ? 'invalid' : ''}`}>
                   <Icon name="user" />
                   <input
-                    ref={usernameRef}
-                    id="username"
-                    name="username"
-                    autoComplete="username"
+                    ref={emailRef}
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    type="email"
                     autoCapitalize="none"
                     spellCheck="false"
-                    maxLength={50}
+                    maxLength={100}
                     required
-                    placeholder="Ej. juan.perez"
-                    value={username}
+                    placeholder="tu@correo.com"
+                    value={email}
                     disabled={pending}
-                    aria-invalid={Boolean(errors.username)}
-                    aria-describedby={errors.username ? 'username-error' : undefined}
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? 'email-error' : undefined}
                     onChange={(e) => {
-                      setUsername(e.target.value);
-                      setErrors((old) => ({ ...old, username: undefined }));
+                      setEmail(e.target.value);
+                      setErrors((old) => ({ ...old, email: undefined }));
                     }}
                   />
                 </div>
-                {errors.username && (
-                  <p className="field-error" id="username-error">
-                    {errors.username}
+                {errors.email && (
+                  <p className="field-error" id="email-error">
+                    {errors.email}
                   </p>
                 )}
               </div>

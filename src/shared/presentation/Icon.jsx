@@ -1,5 +1,24 @@
 export function Icon({ name, size = 20, ...props }) {
   const paths = {
+    calendar: (
+      <>
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M7 3v4m10-4v4M3 11h18" />
+      </>
+    ),
+    wallet: (
+      <>
+        <rect x="3" y="5" width="18" height="15" rx="2" />
+        <path d="M3 9h18m-5 4h5v4h-5z" />
+      </>
+    ),
+    list: (
+      <>
+        <rect x="5" y="4" width="14" height="18" rx="2" />
+        <path d="M9 2h6v4H9zm0 9h6m-6 4h6m-6 4h4" />
+      </>
+    ),
+    folder: <path d="M3 7V4h7l2 3h9v3M3 7h7l2 3h9l-3 10H2z" />,
     store: (
       <>
         <path d="M3 9h18l-2-6H5L3 9Z" />
