@@ -1,6 +1,6 @@
 # CrediFlow · Frontend
 
-React + Vite y JavaScript. Primera entrega: acceso responsive, sin autenticación ficticia.
+React + Vite y JavaScript. Acceso y registro responsive con selección de vendedor o cliente. Identidad pendiente de integración real con el backend.
 
 ## Desarrollo
 

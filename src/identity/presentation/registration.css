@@ -1,0 +1,290 @@
+.registration-main {
+  flex: 1;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 36px 24px 48px;
+}
+.back-link {
+  display: inline-block;
+  color: #62758b;
+  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 30px;
+}
+.back-link:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+.registration-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 28px;
+  color: #8794a5;
+  font-size: 14px;
+}
+.registration-steps > span:not(.step-line) {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.registration-steps b {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #d5deeb;
+  border-radius: 50%;
+  font-size: 13px;
+}
+.registration-steps .current {
+  color: var(--blue);
+  font-weight: 600;
+}
+.registration-steps .current b {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+}
+.registration-steps .completed b {
+  background: #e8f2ff;
+  color: var(--blue);
+  border-color: #bdd5ed;
+}
+.step-line {
+  height: 1px;
+  width: 70px;
+  background: #dce4ef;
+}
+.registration-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 38px 40px 0;
+  box-shadow: 0 8px 30px #1b3d6110;
+}
+.registration-intro {
+  text-align: center;
+}
+.registration-intro h1 {
+  font-size: 32px;
+  letter-spacing: -1px;
+  margin: 12px 0;
+}
+.registration-intro p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0 auto 30px;
+  max-width: 490px;
+}
+.account-options {
+  border: 0;
+  padding: 0;
+  margin: 0 0 30px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.account-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 26px 24px;
+  border: 2px solid #e6ebf2;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.account-option:hover {
+  border-color: #9bbfe6;
+  background: #fafcff;
+}
+.account-option.selected {
+  border-color: var(--blue);
+  background: #f5f9ff;
+}
+.account-option:focus-within {
+  outline: 3px solid #4a9df1;
+  outline-offset: 3px;
+}
+.account-option input {
+  position: absolute;
+  top: 24px;
+  right: 22px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+.option-icon {
+  display: grid;
+  place-items: center;
+  width: 55px;
+  height: 55px;
+  background: #edf5ff;
+  color: var(--blue);
+  border-radius: 13px;
+  margin-bottom: 20px;
+}
+.account-option strong {
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+.option-description {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 12px 0 22px;
+}
+.option-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+.option-features > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #52677d;
+}
+.option-features svg {
+  color: var(--blue);
+}
+.registration-next {
+  max-width: 360px;
+  margin: auto;
+}
+.registration-hint {
+  color: #768699;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.65;
+  margin: 15px 0 0;
+}
+.registration-card .card-footer {
+  margin-top: 28px;
+}
+.registration-card .text-button {
+  text-decoration: none;
+}
+.registration-card .text-button:hover {
+  text-decoration: underline;
+}
+.selected-account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0f6ff;
+  border: 1px solid #dfebf8;
+  border-radius: 7px;
+  padding: 13px 17px;
+  margin-bottom: 26px;
+  color: #255f98;
+}
+.selected-account > span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+}
+.registration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.registration-form-card .input-wrap input {
+  font-size: 15px;
+}
+.registration-form-card .label-row {
+  font-size: 14px;
+}
+.registration-form-card .label-row > span {
+  font-size: 11px;
+}
+.business-fields {
+  border-top: 1px solid var(--border);
+  padding-top: 22px;
+  margin-top: 2px;
+}
+.business-fields h2 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+.business-fields > p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+.field-hint {
+  color: #768699;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 620px) {
+  .registration-main {
+    padding: 25px 18px 32px;
+  }
+  .registration-card {
+    padding: 28px 22px 0;
+  }
+  .registration-intro h1 {
+    font-size: 27px;
+  }
+  .registration-intro p {
+    font-size: 15px;
+  }
+  .account-options,
+  .registration-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .registration-grid {
+    gap: 0;
+  }
+  .account-option {
+    padding: 22px;
+  }
+  .option-icon {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 14px;
+  }
+  .option-description {
+    margin: 10px 0 16px;
+  }
+  .registration-steps {
+    gap: 12px;
+    font-size: 12px;
+  }
+  .step-line {
+    width: 30px;
+  }
+  .registration-form-card .input-wrap input {
+    font-size: 16px;
+  }
+  .registration-card .card-footer {
+    flex-wrap: wrap;
+  }
+}

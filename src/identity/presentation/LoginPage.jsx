@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Icon } from '../../shared/presentation/Icon.jsx';
+import { AuthLayout } from '../../shared/presentation/AuthLayout.jsx';
 import { HelpDialog } from '../../shared/presentation/HelpDialog.jsx';
 
 export function LoginPage({ signIn }) {
@@ -40,26 +41,7 @@ export function LoginPage({ signIn }) {
   }
 
   return (
-    <div className="app-shell">
-      <a className="skip-link" href="#main-content">
-        Saltar al contenido
-      </a>
-      <header className="site-header">
-        <a className="brand" href="/" aria-label="CrediFlow, inicio">
-          <span className="brand-symbol">
-            <Icon name="store" size={25} />
-          </span>
-          <span>
-            <span className="brand-name">CrediFlow</span>
-            <span className="brand-caption">EL CRÉDITO DE TU NEGOCIO, EN ORDEN</span>
-          </span>
-        </a>
-        <span className="header-note">
-          <span className="status-dot" />
-          Hecho para tu negocio
-        </span>
-      </header>
-
+    <AuthLayout>
       <main id="main-content" className="login-main">
         <div className="welcome">
           <span className="eyebrow">BIENVENIDO A CREDIFLOW</span>
@@ -194,10 +176,10 @@ export function LoginPage({ signIn }) {
           )}
           <div className="card-footer">
             <span>¿Aún no tienes acceso?</span>
-            <button className="text-button" onClick={() => setHelp('account')}>
+            <a className="text-button" href="#/registro">
               Solicitar una cuenta
               <Icon name="arrow" size={14} />
-            </button>
+            </a>
           </div>
         </section>
         <div className="access-note">
@@ -205,11 +187,7 @@ export function LoginPage({ signIn }) {
           <span>Un acceso para administradores y clientes.</span>
         </div>
       </main>
-      <footer className="site-footer">
-        <span>© {new Date().getFullYear()} CrediFlow</span>
-        <span>Más claridad. Mejores cuentas.</span>
-      </footer>
       <HelpDialog topic={help} onClose={() => setHelp(null)} />
-    </div>
+    </AuthLayout>
   );
 }

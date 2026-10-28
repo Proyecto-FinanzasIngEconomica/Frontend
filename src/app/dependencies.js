@@ -1,4 +1,6 @@
 import { createSignIn } from '../identity/application/signIn.js';
+import { createRegisterAccount } from '../identity/application/registerAccount.js';
+import { PendingRegistrationRepository } from '../identity/infrastructure/PendingRegistrationRepository.js';
 import { HttpAuthRepository } from '../identity/infrastructure/HttpAuthRepository.js';
 import { createHttpClient } from '../shared/infrastructure/http/createHttpClient.js';
 
@@ -10,3 +12,4 @@ const repository = new HttpAuthRepository({
 });
 
 export const signIn = createSignIn(repository);
+export const registerAccount = createRegisterAccount(new PendingRegistrationRepository());

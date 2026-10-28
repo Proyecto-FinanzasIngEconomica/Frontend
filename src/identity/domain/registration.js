@@ -1,0 +1,41 @@
+export const ACCOUNT_TYPES = Object.freeze({ SELLER: 'SELLER', CLIENT: 'CLIENT' });
+
+export function validateRegistration(data) {
+  const errors = {};
+  if (!Object.values(ACCOUNT_TYPES).includes(data.accountType))
+    errors.accountType = 'Selecciona un tipo de cuenta.';
+  if (!data.fullName.trim() || data.fullName.trim().length > 150)
+    errors.fullName = 'Ingresa tu nombre completo (máximo 150 caracteres).';
+  if (!/^[a-zA-Z0-9._-]{4,50}$/.test(data.username.trim()))
+    errors.username = 'Usa entre 4 y 50 letras, números, puntos, guiones o guiones bajos.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) || data.email.trim().length > 100)
+    errors.email = 'Ingresa un correo electrónico válido.';
+  if (data.password.length < 8 || data.password.length > 72)
+    errors.password = 'Usa una contraseña de entre 8 y 72 caracteres.';
+  if (!data.confirmPassword || data.password !== data.confirmPassword)
+    errors.confirmPassword = 'Las contraseñas deben coincidir.';
+  if (data.accountType === ACCOUNT_TYPES.SELLER) {
+    if (!data.businessName.trim() || data.businessName.trim().length > 100)
+      errors.businessName = 'Ingresa el nombre de tu negocio (máximo 100 caracteres).';
+    if (!/^\d{11}$/.test(data.ruc.trim())) errors.ruc = 'Ingresa los 11 dígitos del RUC.';
+  }
+  if (
+    data.accountType === ACCOUNT_TYPES.CLIENT &&
+    !/^[a-zA-Z0-9-]{4,32}$/.test(data.storeCode.trim())
+  )
+    errors.storeCode = 'Ingresa el código que te proporcionó tu tienda (4 a 32 caracteres).';
+  return errors;
+}
+
+export function toRegistrationRequest(data) {
+  const common = {
+    accountType: data.accountType,
+    fullName: data.fullName.trim(),
+    username: data.username.trim(),
+    email: data.email.trim(),
+    password: data.password,
+  };
+  return data.accountType === ACCOUNT_TYPES.SELLER
+    ? { ...common, businessName: data.businessName.trim(), ruc: data.ruc.trim() }
+    : { ...common, storeCode: data.storeCode.trim() };
+}

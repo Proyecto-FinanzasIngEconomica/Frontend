@@ -44,7 +44,7 @@ Listas paginadas: `content` y `page` (`size`, `number`, `totalElements`, `totalP
 
 ## Acceso: contrato propuesto, todavía NO existente
 
-Se eligió **username** para mantener consistencia con el modelo de usuarios del informe. No hay registro público ni recuperación automática porque esas operaciones aún no tienen API. Las ayudas indican cómo contactar al administrador, sin fingir que se enviaron solicitudes.
+Se eligió **username** para mantener consistencia con el modelo de usuarios del informe. La interfaz de registro público se añadió por solicitud del usuario. Aún no tiene API. La recuperación de contraseña sigue siendo una ayuda para contactar al administrador. Ningún formulario simula envíos exitosos.
 
 Propuesta a acordar:
 
@@ -77,3 +77,15 @@ Para habilitar: implementar y verificar el contrato, configurar `VITE_API_BASE_U
 6. Vincular el dashboard al perfil autenticado y después construir clientes, productos y compras sobre las rutas existentes.
 
 No se incluyeron credenciales, propiedades privadas del ZIP ni el código del backend en el repositorio frontend.
+
+## Avance 03: registro de vendedor o cliente
+
+Ruta frontend: `/#/registro`, enlazada desde «Solicitar una cuenta». Primer paso: selección explícita de perfil; segundo: formulario. Se puede cambiar de perfil y volver al login. El registro no llama al endpoint de creación de clientes: ese endpoint no crea identidades ni credenciales.
+
+Campos comunes propuestos: `accountType` (SELLER/CLIENT), `fullName`, `username`, `email`, `password`. La confirmación de contraseña se valida localmente y no forma parte de la solicitud. Vendedor añade `businessName` y `ruc` (validación de formato de 11 dígitos, sin verificar existencia). Cliente añade `storeCode`, propuesta de código de vinculación que todavía no existe en el backend. No se envían campos del otro perfil.
+
+Estos campos y validaciones son un contrato propuesto, no DTOs existentes. El nombre completo debe mapearse al modelo de cliente cuando se acuerde el contrato. La política de contraseña (8 a 72 caracteres en la interfaz) deberá armonizarse con la política y los límites de bytes del algoritmo de hash del backend.
+
+La selección SELLER representa una solicitud de alta y no concede ADMIN_TIENDA automáticamente. El servidor debe validar el negocio, aprobar o rechazar el alta y asignar rol/tienda. Para clientes debe verificar el código y la autorización de vinculación. No ofrecer el rol ADMIN_SISTEMA en el registro público.
+
+`PendingRegistrationRepository` cumple el puerto de registro, pero devuelve un mensaje explícito de integración pendiente. Sustituirlo por un adaptador HTTP al implementar y acordar registro, verificación de correo, códigos de tienda y respuestas. No hay persistencia ni transmisión de datos en este avance. Los formularios usan memoria de React; no se almacenan contraseñas en el navegador.
