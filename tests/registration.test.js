@@ -6,7 +6,7 @@ import { PendingRegistrationRepository } from '../src/identity/infrastructure/Pe
 const valid = {
   accountType: 'CLIENT',
   fullName: ' Juan Pérez ',
-  username: 'juan.perez',
+  dni: '01234567',
   email: 'juan@example.com',
   password: 'clave-ejemplo',
   confirmPassword: 'clave-ejemplo',
@@ -19,6 +19,9 @@ test('cliente: envía solo los campos de su perfil, sin confirmación ni rol pri
   const register = createRegisterAccount({
     register: async (data) => {
       assert.equal(data.fullName, 'Juan Pérez');
+      assert.equal(data.documentType, 'DNI');
+      assert.equal(data.documentNumber, '01234567');
+      assert.equal('username' in data, false);
       assert.equal(data.storeCode, 'TIENDA-1234');
       for (const key of ['businessName', 'ruc', 'confirmPassword', 'role'])
         assert.equal(key in data, false);
@@ -58,4 +61,11 @@ test('contraseñas distintas, perfil desconocido y código vacío impiden regist
 test('sin API de registro no se crea una cuenta ficticia', async () => {
   const register = createRegisterAccount(new PendingRegistrationRepository());
   await assert.rejects(register(valid), /no se ha creado/);
+});
+
+test('DNI: rechaza longitudes incorrectas y letras sin eliminar ceros iniciales', async () => {
+  const register = createRegisterAccount({ register: async () => assert.fail('DNI inválido') });
+  for (const dni of ['', '1234567', '123456789', '1234567A']) {
+    assert.ok((await register({ ...valid, dni })).errors.dni);
+  }
 });

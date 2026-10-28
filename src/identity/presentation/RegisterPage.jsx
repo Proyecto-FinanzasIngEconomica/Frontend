@@ -8,7 +8,7 @@ import './registration.css';
 const initialValues = {
   accountType: '',
   fullName: '',
-  username: '',
+  dni: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -199,14 +199,15 @@ export function RegisterPage({ registerAccount }) {
                     {...field('fullName')}
                   />
                   <FormField
-                    name="username"
-                    label="Nombre de usuario"
-                    autoComplete="username"
-                    autoCapitalize="none"
-                    spellCheck={false}
-                    maxLength={50}
-                    placeholder="Ej. juan.perez"
-                    {...field('username')}
+                    name="dni"
+                    label="Número de DNI"
+                    inputMode="numeric"
+                    pattern="[0-9]{8}"
+                    minLength={8}
+                    maxLength={8}
+                    placeholder="Ingresa 8 dígitos"
+                    hint="Sin el dígito verificador."
+                    {...field('dni')}
                   />
                 </div>
                 <FormField
@@ -243,7 +244,7 @@ export function RegisterPage({ registerAccount }) {
                   <p>
                     {seller
                       ? 'Tu solicitud de vendedor estará sujeta a la validación del administrador.'
-                      : 'Solicita el código al vendedor de la tienda donde compras al crédito.'}
+                      : 'El código identifica la tienda donde compras al crédito. Pídeselo a tu vendedor; la vinculación deberá ser validada por la tienda.'}
                   </p>
                   {seller ? (
                     <div className="registration-grid">

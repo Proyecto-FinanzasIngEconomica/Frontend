@@ -82,10 +82,18 @@ No se incluyeron credenciales, propiedades privadas del ZIP ni el código del ba
 
 Ruta frontend: `/#/registro`, enlazada desde «Solicitar una cuenta». Primer paso: selección explícita de perfil; segundo: formulario. Se puede cambiar de perfil y volver al login. El registro no llama al endpoint de creación de clientes: ese endpoint no crea identidades ni credenciales.
 
-Campos comunes propuestos: `accountType` (SELLER/CLIENT), `fullName`, `username`, `email`, `password`. La confirmación de contraseña se valida localmente y no forma parte de la solicitud. Vendedor añade `businessName` y `ruc` (validación de formato de 11 dígitos, sin verificar existencia). Cliente añade `storeCode`, propuesta de código de vinculación que todavía no existe en el backend. No se envían campos del otro perfil.
+Campos comunes propuestos: `accountType` (SELLER/CLIENT), `fullName`, `documentType` (DNI), `documentNumber`, `email`, `password`. La confirmación de contraseña se valida localmente y no forma parte de la solicitud. Vendedor añade `businessName` y `ruc` (validación de formato de 11 dígitos, sin verificar existencia). Cliente añade `storeCode`, propuesta de código de vinculación que todavía no existe en el backend. No se envían campos del otro perfil.
 
 Estos campos y validaciones son un contrato propuesto, no DTOs existentes. El nombre completo debe mapearse al modelo de cliente cuando se acuerde el contrato. La política de contraseña (8 a 72 caracteres en la interfaz) deberá armonizarse con la política y los límites de bytes del algoritmo de hash del backend.
 
 La selección SELLER representa una solicitud de alta y no concede ADMIN_TIENDA automáticamente. El servidor debe validar el negocio, aprobar o rechazar el alta y asignar rol/tienda. Para clientes debe verificar el código y la autorización de vinculación. No ofrecer el rol ADMIN_SISTEMA en el registro público.
 
 `PendingRegistrationRepository` cumple el puerto de registro, pero devuelve un mensaje explícito de integración pendiente. Sustituirlo por un adaptador HTTP al implementar y acordar registro, verificación de correo, códigos de tienda y respuestas. No hay persistencia ni transmisión de datos en este avance. Los formularios usan memoria de React; no se almacenan contraseñas en el navegador.
+
+## Avance 04: DNI en el registro
+
+Se reemplazó el nombre de usuario del registro por DNI peruano de 8 dígitos (sin dígito verificador). La vista conserva el documento como texto para no perder ceros iniciales; el contrato propuesto envía `documentType: "DNI"` y `documentNumber`. La validación comprueba formato, no identidad ni existencia en RENIEC. El formulario no exige un alias adicional.
+
+El login conserva temporalmente su contrato `username` porque el backend no implementa identidad aún. Antes de habilitar autenticación real, acordar acceso con DNI, unicidad y selección de tienda si un documento tiene cuentas en varios comercios; no confundir el DNI con un código de vinculación o una autorización. El siguiente avance de identidad deberá actualizar login y API de forma coordinada.
+
+Vincular tienda: propuesta pendiente de backend. La tienda emitiría una invitación; el cliente ingresaría el código; el servidor verificaría existencia, vigencia y autorización, mostraría el negocio correspondiente y registraría la asociación solo después de validar la identidad y/o aprobación del vendedor. No enlazar al cliente con una deuda existente solo por conocer DNI y código. Este avance solo aclara el texto del campo; no implementa invitaciones ni asociaciones reales.

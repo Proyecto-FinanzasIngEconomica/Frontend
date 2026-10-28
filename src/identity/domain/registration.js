@@ -6,8 +6,8 @@ export function validateRegistration(data) {
     errors.accountType = 'Selecciona un tipo de cuenta.';
   if (!data.fullName.trim() || data.fullName.trim().length > 150)
     errors.fullName = 'Ingresa tu nombre completo (máximo 150 caracteres).';
-  if (!/^[a-zA-Z0-9._-]{4,50}$/.test(data.username.trim()))
-    errors.username = 'Usa entre 4 y 50 letras, números, puntos, guiones o guiones bajos.';
+  if (!/^\d{8}$/.test(data.dni.trim()))
+    errors.dni = 'Ingresa los 8 dígitos de tu DNI, sin el dígito verificador.';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) || data.email.trim().length > 100)
     errors.email = 'Ingresa un correo electrónico válido.';
   if (data.password.length < 8 || data.password.length > 72)
@@ -31,7 +31,8 @@ export function toRegistrationRequest(data) {
   const common = {
     accountType: data.accountType,
     fullName: data.fullName.trim(),
-    username: data.username.trim(),
+    documentType: 'DNI',
+    documentNumber: data.dni.trim(),
     email: data.email.trim(),
     password: data.password,
   };
