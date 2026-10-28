@@ -119,3 +119,17 @@ Es un mecanismo de demostración local, manipulable desde el navegador; no const
 Dashboard: saludo de la cuenta autenticada, tres indicadores (financiamientos activos, saldo y próximo pago), tabla vacía de financiamientos, navegación a tiendas/productos, historial de pagos y actividad. Los saldos empiezan en cero y no se inventan operaciones financieras. Las tiendas corresponden a cuentas locales SELLER, mostrando únicamente id y nombre del negocio. Todavía no hay gestión de productos ni compras: las vistas muestran estados vacíos claros.
 
 Migración: seleccionar `VITE_IDENTITY_PROVIDER=http`, completar registro, login por correo, recuperación de sesión, logout y adaptadores de consultas reales; sustituir las operaciones temporales de `identity`. No activar HTTP como si la integración estuviera completa: por ahora no restaura sesiones ni registra cuentas. Retirar las tres claves locales y el adaptador local al finalizar la migración. El historial local es una ayuda de pruebas, no auditoría inmutable.
+
+## Vista: catálogo de negocios y productos
+
+Rama `feature/catalogo-negocios-productos`: todos los ajustes de esta vista se realizan en esta misma rama, sin abrir una por cambio pequeño. Las próximas ramas se nombrarán por vista o funcionalidad coherente.
+
+Nuevo contexto `catalog` separado en domain (puerto), application (consultas y búsqueda), infrastructure (adaptador local y ejemplos) y presentation (interfaz). La composición se realiza en `app/dependencies.js`; el dashboard utiliza la vista de catálogo como componente independiente.
+
+Negocios: imagen ilustrativa local, categoría, nombre, descripción, ubicación orientativa y acceso al catálogo. Hay 3 negocios y 9 productos de ejemplo identificados explícitamente; el usuario puede ocultar ejemplos en el panel. Las tiendas locales registradas también aparecen con imagen y descripción predeterminadas hasta incorporar edición de perfil del negocio. No se copian datos privados de usuarios al catálogo.
+
+Productos: se filtran por storeId y muestran imagen, categoría, descripción, precio al contado y disponibilidad orientativa de financiamiento. Búsqueda sin distinción de tildes/mayúsculas, filtro por categoría, carga, reintento y estados vacíos. Los precios de los ejemplos no son ofertas comerciales reales.
+
+Comprar y Simular cuotas abren diálogos informativos para este avance de catálogo. No generan pedidos, transacciones, cuotas calculadas ni deudas. No se muestran importes mensuales ficticios: se calcularán al implementar la simulación con condiciones reales del cliente en cada tienda. El flujo de compra corresponde a otra vista/avance.
+
+Assets SVG originales en `public/catalog`, sin dependencias de imágenes externas. Sustituir el adaptador local por consultas al backend: GET de productos por tienda ya existe; el listado público de negocios con descripción e imagen debe implementarse. Los recursos deberán incluir id, name, category, description, imageUrl y productos con cashPrice, creditPrice, currency y modalidades permitidas. Nunca mezclar productos entre tiendas.

@@ -36,7 +36,7 @@ Las dependencias apuntan hacia domain/application. No se agregan entidades de ti
 
 - `main`: base estable y entregas aprobadas.
 - `develop`: integración de avances revisados.
-- `feature/<avance>`: cada avance parte de `develop` y se revisa antes de integrar.
+- `feature/<vista>`: agrupa todos los cambios de una vista o funcionalidad; reutiliza la rama para sus ajustes. Integra las dependencias revisadas en `develop` antes de abrir una vista independiente.
 - `release/<version>` y `hotfix/<correccion>` cuando sean necesarios.
 
 Ejemplo: `feature/01-access-screen`. No integrar automáticamente en main/develop: usar revisión y PR.
@@ -52,3 +52,7 @@ Consulta [el contrato de integración](docs/backend-integration.md) antes de hab
 5. Para ver tiendas, registra primero una cuenta de vendedor en este mismo navegador/origen. El catálogo de productos aún está vacío.
 
 `VITE_IDENTITY_PROVIDER=local` selecciona el adaptador temporal. Cuentas y sesiones no se comparten entre navegadores. Cerrar la pestaña no cierra sesión. Elimina datos del sitio para reiniciar las pruebas; esto borra sus cuentas locales.
+
+## Catálogo
+
+«Tiendas y productos» abre negocios con imágenes y descripciones. Selecciona una tienda para ver sus productos y utiliza búsqueda/categorías. Los ejemplos se identifican y se pueden ocultar. Las tiendas registradas localmente aparecen con una ilustración y descripción iniciales. Comprar/simular muestran el detalle del próximo flujo, sin realizar operaciones.

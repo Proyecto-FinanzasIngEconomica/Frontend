@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Icon } from '../../shared/presentation/Icon.jsx';
 import './dashboard.css';
+import { CatalogPage } from '../../catalog/presentation/CatalogPage.jsx';
+import { loadStores, loadProducts } from '../../app/dependencies.js';
 
 const tabs = [
   ['inicio', 'Inicio'],
@@ -11,9 +13,7 @@ const tabs = [
 
 export function DashboardPage({ session, onSignOut, identity, localMode }) {
   const [view, setView] = useState('inicio');
-  const [store, setStore] = useState(null);
   const user = session.user;
-  const stores = identity.listStores();
   const titles = {
     inicio: 'Inicio',
     catalogo: 'Tiendas y productos',
@@ -23,7 +23,6 @@ export function DashboardPage({ session, onSignOut, identity, localMode }) {
   };
   function navigate(next) {
     setView(next);
-    setStore(null);
   }
   return (
     <div className="app-shell dashboard-shell">
@@ -74,28 +73,30 @@ export function DashboardPage({ session, onSignOut, identity, localMode }) {
             <span>Datos guardados únicamente en este navegador</span>
           </div>
         )}
-        <div className="dashboard-title">
-          <div>
-            <span className="eyebrow">MI CUENTA</span>
-            <h1>{titles[view]}</h1>
-            <p>
-              {view === 'inicio'
-                ? `Bienvenido de nuevo, ${(user.fullName || user.email).split(' ')[0]}. Este es el resumen de tu cuenta.`
-                : view === 'catalogo'
-                  ? 'Explora los negocios registrados y descubre sus productos.'
-                  : view === 'actividad'
-                    ? 'Consulta tus entradas y salidas en este navegador.'
-                    : 'Toda la información de tus operaciones, en un solo lugar.'}
-            </p>
+        {view !== 'catalogo' && (
+          <div className="dashboard-title">
+            <div>
+              <span className="eyebrow">MI CUENTA</span>
+              <h1>{titles[view]}</h1>
+              <p>
+                {view === 'inicio'
+                  ? `Bienvenido de nuevo, ${(user.fullName || user.email).split(' ')[0]}. Este es el resumen de tu cuenta.`
+                  : view === 'catalogo'
+                    ? 'Explora los negocios registrados y descubre sus productos.'
+                    : view === 'actividad'
+                      ? 'Consulta tus entradas y salidas en este navegador.'
+                      : 'Toda la información de tus operaciones, en un solo lugar.'}
+              </p>
+            </div>
+            {view !== 'catalogo' && (
+              <button className="catalog-button" onClick={() => navigate('catalogo')}>
+                <Icon name="store" size={18} />
+                Ir al catálogo
+                <Icon name="arrow" size={17} />
+              </button>
+            )}
           </div>
-          {view !== 'catalogo' && (
-            <button className="catalog-button" onClick={() => navigate('catalogo')}>
-              <Icon name="store" size={18} />
-              Ir al catálogo
-              <Icon name="arrow" size={17} />
-            </button>
-          )}
-        </div>
+        )}
         {view === 'inicio' && (
           <>
             <div className="summary-grid">
@@ -183,56 +184,7 @@ export function DashboardPage({ session, onSignOut, identity, localMode }) {
             </div>
           </>
         )}
-        {view === 'catalogo' && (
-          <section className="dashboard-panel catalog-panel">
-            {store ? (
-              <>
-                <button className="text-button" onClick={() => setStore(null)}>
-                  ← Volver a tiendas
-                </button>
-                <h2>{store.name}</h2>
-                <Empty
-                  icon="store"
-                  title="Esta tienda aún no tiene productos"
-                  description="El catálogo se completará al implementar la gestión de productos. No hay compras disponibles todavía."
-                />
-              </>
-            ) : (
-              <>
-                <div className="panel-heading">
-                  <div>
-                    <h2>Tiendas disponibles</h2>
-                    <p>Negocios creados en este navegador durante las pruebas.</p>
-                  </div>
-                  <span className="store-count">{stores.length} tiendas</span>
-                </div>
-                {stores.length ? (
-                  <div className="store-grid">
-                    {stores.map((entry) => (
-                      <article className="store-card" key={entry.id}>
-                        <span className="empty-symbol">
-                          <Icon name="store" size={27} />
-                        </span>
-                        <h3>{entry.name}</h3>
-                        <p>Tienda local de prueba</p>
-                        <button className="secondary-button" onClick={() => setStore(entry)}>
-                          Ver productos
-                          <Icon name="arrow" size={16} />
-                        </button>
-                      </article>
-                    ))}
-                  </div>
-                ) : (
-                  <Empty
-                    icon="store"
-                    title="Pronto encontrarás tiendas aquí"
-                    description="Todavía no hay vendedores registrados en este navegador. Crea una cuenta de vendedor para probar la lista de tiendas."
-                  />
-                )}
-              </>
-            )}
-          </section>
-        )}
+        {view === 'catalogo' && <CatalogPage loadStores={loadStores} loadProducts={loadProducts} />}
         {(view === 'financiamientos' || view === 'pagos') && (
           <section className="dashboard-panel">
             <Empty

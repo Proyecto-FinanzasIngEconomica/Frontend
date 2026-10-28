@@ -26,3 +26,11 @@ export const signIn = createSignIn(localMode ? localRepository : httpRepository)
 export const registerAccount = createRegisterAccount(
   localMode ? localRepository : new PendingRegistrationRepository(),
 );
+
+import { LocalCatalogRepository } from '../catalog/infrastructure/LocalCatalogRepository.js';
+import { createLoadStores, createLoadProducts } from '../catalog/application/loadCatalog.js';
+const catalogRepository = new LocalCatalogRepository({
+  listLocalStores: () => identity.listStores(),
+});
+export const loadStores = createLoadStores(catalogRepository);
+export const loadProducts = createLoadProducts(catalogRepository);

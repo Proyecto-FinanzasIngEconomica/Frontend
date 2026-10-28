@@ -1,5 +1,27 @@
 export function Icon({ name, size = 20, ...props }) {
   const paths = {
+    search: (
+      <>
+        <circle cx="10" cy="10" r="6" />
+        <path d="m15 15 6 6" />
+      </>
+    ),
+    pin: (
+      <>
+        <path d="M19 10c0 6-7 11-7 11S5 16 5 10a7 7 0 1 1 14 0Z" />
+        <circle cx="12" cy="10" r="2" />
+      </>
+    ),
+    cart: (
+      <>
+        <path d="M2 3h3l3 13h11l3-9H6M9 20h.01M18 20h.01" />
+      </>
+    ),
+    sliders: (
+      <>
+        <path d="M3 6h18M3 12h18M3 18h18M8 3v6m8 0v6m-8 0v6" />
+      </>
+    ),
     calendar: (
       <>
         <rect x="3" y="5" width="18" height="16" rx="2" />
