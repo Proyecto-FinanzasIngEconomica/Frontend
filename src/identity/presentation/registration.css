@@ -298,3 +298,66 @@
   font-size: 14px;
   line-height: 1.7;
 }
+.registration-consent {
+  padding: 16px;
+  margin: 22px 0;
+  border: 1px solid #dfe7f3;
+  background: #f5f8fd;
+  border-radius: 7px;
+}
+.registration-consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.registration-consent-row > input {
+  width: 19px;
+  height: 19px;
+  margin: 2px 0 0;
+  flex-shrink: 0;
+  accent-color: #0865bd;
+  cursor: pointer;
+}
+.registration-consent-row > span {
+  color: #52647b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.registration-consent-row label {
+  cursor: pointer;
+}
+.registration-consent-row .text-button {
+  display: inline;
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+}
+.registration-consent > p {
+  font-size: 11px;
+  color: #7b899a;
+  line-height: 1.6;
+  margin: 10px 0 0 31px;
+}
+.registration-consent.invalid {
+  border-color: #c74355;
+}
+.registration-consent .consent-error {
+  color: #b32f43;
+}
+.privacy-policy-dialog {
+  max-width: 680px;
+  max-height: 85dvh;
+  overflow-y: auto;
+}
+.privacy-policy-dialog h3 {
+  font-size: 15px;
+  margin: 24px 0 8px;
+}
+.privacy-policy-dialog .privacy-draft {
+  padding: 12px;
+  background: #fff5df;
+  border-radius: 5px;
+  color: #806224;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}

@@ -1,7 +1,11 @@
 export const ACCOUNT_TYPES = Object.freeze({ SELLER: 'SELLER', CLIENT: 'CLIENT' });
+import { PRIVACY_POLICY_VERSION } from './privacyPolicy.js';
 
 export function validateRegistration(data) {
   const errors = {};
+  if (data.privacyAccepted !== true)
+    errors.privacyAccepted =
+      'Debes aceptar el tratamiento de tus datos personales para crear tu cuenta.';
   if (!Object.values(ACCOUNT_TYPES).includes(data.accountType))
     errors.accountType = 'Selecciona un tipo de cuenta.';
   if (!data.fullName.trim() || data.fullName.trim().length > 150)
@@ -30,6 +34,7 @@ export function toRegistrationRequest(data) {
     documentNumber: data.dni.trim(),
     email: data.email.trim(),
     password: data.password,
+    dataConsent: { accepted: data.privacyAccepted === true, policyVersion: PRIVACY_POLICY_VERSION },
   };
   return data.accountType === ACCOUNT_TYPES.SELLER
     ? { ...common, businessName: data.businessName.trim(), ruc: data.ruc.trim() }

@@ -1,4 +1,5 @@
 import { AuthRepository } from '../domain/AuthRepository.js';
+import { validateDataConsent } from '../domain/privacyPolicy.js';
 
 const USERS = 'crediflow.local.users.v1';
 const SESSION = 'crediflow.local.session.v1';
@@ -58,6 +59,8 @@ export class LocalIdentityRepository extends AuthRepository {
   }
 
   async register(request) {
+    if (!validateDataConsent(request.dataConsent))
+      throw new Error('Debes aceptar la política de privacidad vigente para registrar tu cuenta.');
     const email = request.email.trim().toLowerCase();
     const salt = Array.from(this.crypto.getRandomValues(new Uint8Array(16)));
     const passwordHash = await this.hash(request.password, salt);
@@ -72,6 +75,11 @@ export class LocalIdentityRepository extends AuthRepository {
       email,
       id: this.crypto.randomUUID(),
       createdAt: this.now(),
+      dataConsent: {
+        accepted: true,
+        policyVersion: request.dataConsent.policyVersion,
+        acceptedAt: this.now(),
+      },
       salt,
       passwordHash,
     };

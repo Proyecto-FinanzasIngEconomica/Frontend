@@ -4,6 +4,7 @@ import { AuthLayout } from '../../shared/presentation/AuthLayout.jsx';
 import { FormField } from '../../shared/presentation/FormField.jsx';
 import { Icon } from '../../shared/presentation/Icon.jsx';
 import './registration.css';
+import { PrivacyPolicyDialog } from './PrivacyPolicyDialog.jsx';
 
 const initialValues = {
   accountType: '',
@@ -14,6 +15,7 @@ const initialValues = {
   confirmPassword: '',
   businessName: '',
   ruc: '',
+  privacyAccepted: false,
 };
 const options = [
   {
@@ -38,13 +40,20 @@ export function RegisterPage({ registerAccount, onRegistered, localMode }) {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
   const [pending, setPending] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
   const busy = useRef(false);
   const form = useRef(null);
   const heading = useRef(null);
   const seller = values.accountType === ACCOUNT_TYPES.SELLER;
 
   function selectType(value) {
-    setValues((old) => ({ ...old, accountType: value, businessName: '', ruc: '' }));
+    setValues((old) => ({
+      ...old,
+      accountType: value,
+      businessName: '',
+      ruc: '',
+      privacyAccepted: false,
+    }));
     setErrors({});
   }
   function field(name) {
@@ -274,12 +283,61 @@ export function RegisterPage({ registerAccount, onRegistered, localMode }) {
                     registrarte y explorar sus productos.
                   </p>
                 )}
+                <div className={`registration-consent ${errors.privacyAccepted ? 'invalid' : ''}`}>
+                  <div className="registration-consent-row">
+                    <input
+                      id="privacy-accepted"
+                      name="privacyAccepted"
+                      type="checkbox"
+                      required
+                      checked={values.privacyAccepted}
+                      disabled={pending}
+                      aria-labelledby="privacy-consent-label"
+                      aria-invalid={Boolean(errors.privacyAccepted)}
+                      aria-describedby={
+                        errors.privacyAccepted ? 'privacy-consent-error' : 'privacy-consent-hint'
+                      }
+                      onChange={(event) => {
+                        setValues((old) => ({ ...old, privacyAccepted: event.target.checked }));
+                        setErrors((old) => ({ ...old, privacyAccepted: undefined }));
+                      }}
+                    />
+                    <span id="privacy-consent-label">
+                      <label htmlFor="privacy-accepted">He leído la </label>
+                      <button
+                        type="button"
+                        className="text-button"
+                        onClick={() => setShowPrivacy(true)}
+                      >
+                        Política de Privacidad
+                      </button>
+                      <label htmlFor="privacy-accepted">
+                        {' '}
+                        y acepto el tratamiento de mis datos personales para gestionar mi cuenta,
+                        compras y financiamientos.
+                      </label>
+                    </span>
+                  </div>
+                  <p id="privacy-consent-hint">
+                    Aceptación obligatoria para clientes y vendedores. Política provisional del
+                    entorno de prueba.
+                  </p>
+                  {errors.privacyAccepted && (
+                    <p id="privacy-consent-error" className="consent-error" role="alert">
+                      {errors.privacyAccepted}
+                    </p>
+                  )}
+                </div>
                 {message && (
                   <div className="form-alert" role="alert">
                     {message}
                   </div>
                 )}
-                <button className="primary-button" disabled={pending} type="submit">
+                <button
+                  className="primary-button"
+                  disabled={pending || !values.privacyAccepted}
+                  type="submit"
+                >
                   {pending
                     ? 'Validando…'
                     : seller
@@ -307,6 +365,7 @@ export function RegisterPage({ registerAccount, onRegistered, localMode }) {
           <span>Tu negocio y tus cuentas, conectados.</span>
         </div>
       </main>
+      {showPrivacy && <PrivacyPolicyDialog onClose={() => setShowPrivacy(false)} />}
     </AuthLayout>
   );
 }

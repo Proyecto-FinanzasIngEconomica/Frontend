@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRegisterAccount } from '../src/identity/application/registerAccount.js';
 import { PendingRegistrationRepository } from '../src/identity/infrastructure/PendingRegistrationRepository.js';
+import { PRIVACY_POLICY_VERSION } from '../src/identity/domain/privacyPolicy.js';
 
 const valid = {
   accountType: 'CLIENT',
@@ -12,7 +13,53 @@ const valid = {
   confirmPassword: 'clave-ejemplo',
   businessName: '',
   ruc: '',
+  privacyAccepted: true,
 };
+test('ambos perfiles requieren aceptación explícita antes de enviar datos', async () => {
+  let calls = 0;
+  const register = createRegisterAccount({
+    register: async () => {
+      calls++;
+    },
+  });
+  for (const accountType of ['CLIENT', 'SELLER']) {
+    for (const privacyAccepted of [false, undefined, 'true', 1]) {
+      const result = await register({
+        ...valid,
+        accountType,
+        businessName: 'Tienda',
+        ruc: '20123456789',
+        privacyAccepted,
+      });
+      assert.equal(result.ok, false);
+      assert.ok(result.errors.privacyAccepted);
+    }
+  }
+  assert.equal(calls, 0);
+});
+test('envía la versión vigente para clientes y vendedores sin confiar en versiones enviadas por el formulario', async () => {
+  const requests = [];
+  const register = createRegisterAccount({ register: async (data) => requests.push(data) });
+  for (const accountType of ['CLIENT', 'SELLER']) {
+    assert.equal(
+      (
+        await register({
+          ...valid,
+          accountType,
+          businessName: 'Tienda',
+          ruc: '20123456789',
+          dataConsent: { policyVersion: 'alterada' },
+        })
+      ).ok,
+      true,
+    );
+  }
+  for (const request of requests)
+    assert.deepEqual(request.dataConsent, {
+      accepted: true,
+      policyVersion: PRIVACY_POLICY_VERSION,
+    });
+});
 
 test('cliente: envía solo los campos de su perfil, sin confirmación ni rol privilegiado', async () => {
   const register = createRegisterAccount({

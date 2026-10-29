@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { LocalIdentityRepository } from '../src/identity/infrastructure/LocalIdentityRepository.js';
+import { PRIVACY_POLICY_VERSION } from '../src/identity/domain/privacyPolicy.js';
 
 function setup() {
   const records = new Map();
@@ -18,6 +19,7 @@ const profile = {
   password: 'solo-pruebas-123',
   documentType: 'DNI',
   documentNumber: '00000001',
+  dataConsent: { accepted: true, policyVersion: PRIVACY_POLICY_VERSION },
 };
 
 test('registro y acceso persisten sin guardar contraseñas en texto plano', async () => {
@@ -38,6 +40,42 @@ test('registro y acceso persisten sin guardar contraseñas en texto plano', asyn
     repository.getActivity(session.user.id).map((entry) => entry.action),
     ['LOGOUT', 'LOGIN'],
   );
+});
+test('guarda fecha y versión de consentimiento para ambos perfiles y las recupera al iniciar sesión', async () => {
+  for (const accountType of ['CLIENT', 'SELLER']) {
+    const { storage } = setup();
+    const now = () => '2026-10-28T20:00:00.000Z';
+    const repository = new LocalIdentityRepository({ storage, now });
+    await repository.register({
+      ...profile,
+      accountType,
+      dataConsent: { ...profile.dataConsent, acceptedAt: 'fecha-falsa' },
+    });
+    const session = await repository.signIn({ email: profile.email, password: profile.password });
+    assert.deepEqual(session.user.dataConsent, {
+      accepted: true,
+      policyVersion: PRIVACY_POLICY_VERSION,
+      acceptedAt: now(),
+    });
+    assert.deepEqual(
+      new LocalIdentityRepository({ storage }).getSession().user.dataConsent,
+      session.user.dataConsent,
+    );
+  }
+});
+test('el repositorio también rechaza registros sin consentimiento o con versión antigua', async () => {
+  const { repository, storage } = setup();
+  for (const dataConsent of [
+    undefined,
+    { accepted: false, policyVersion: PRIVACY_POLICY_VERSION },
+    { accepted: true, policyVersion: 'antigua' },
+  ]) {
+    await assert.rejects(
+      repository.register({ ...profile, dataConsent }),
+      /política de privacidad/,
+    );
+  }
+  assert.equal(storage.getItem('crediflow.local.users.v1'), null);
 });
 
 test('rechaza credenciales incorrectas, correo repetido y DNI repetido', async () => {
