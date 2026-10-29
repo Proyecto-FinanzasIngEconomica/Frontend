@@ -9,7 +9,7 @@ El inicio de sesión de una cuenta `SELLER` abre el panel de tienda. Las cuentas
 | Inicio                      | Productos activos, clientes con financiamiento, créditos activos, saldo por cobrar por moneda, financiamientos recientes y accesos rápidos. |
 | Mi tienda                   | Registro y edición de nombre comercial, RUC, categoría, dirección, correo, teléfono y descripción. Publicar o retirar del catálogo.         |
 | Productos                   | Búsqueda por nombre y categoría, filtro de estado, precio, stock, disponibilidad de financiamiento y activación/desactivación.              |
-| Registrar / editar producto | Nombre, categoría, descripción, precio PEN, stock, imagen del catálogo o HTTPS, financiamiento permitido y estado.                          |
+| Registrar / editar producto | Nombre, categoría, descripción, precio PEN, stock, subida de imagen con vista previa, financiamiento permitido y estado.                    |
 | Clientes                    | Clientes con al menos un financiamiento asociado a la tienda, búsqueda por nombre, DNI o correo, cantidad de créditos y saldo.              |
 | Detalle del cliente         | Datos de contacto y listado de sus financiamientos exclusivamente en esta tienda.                                                           |
 | Financiamientos             | Búsqueda por cliente, DNI o producto; filtros activo/completado; monto, saldo y cuotas pagadas.                                             |
@@ -30,6 +30,7 @@ El inicio de sesión de una cuenta `SELLER` abre el panel de tienda. Las cuentas
 
 ## Persistencia e integración
 
+- Las fotos se suben desde el equipo (JPG, PNG o WebP, hasta 10 MB), se optimizan a un máximo de 1000 píxeles de lado y se guardan junto con el producto en el navegador. Se pueden reemplazar o quitar. Para producción, se necesita almacenamiento de archivos mediante la API.
 - Tiendas y productos usan `localStorage`; los identificadores del vendedor y la tienda coinciden.
 - Los financiamientos mantienen la copia original del producto y sus condiciones. Editar un producto no cambia los créditos ya aceptados.
 - Las consultas del vendedor filtran por `product.storeId`; los clientes sin financiamiento en la tienda no se listan.

@@ -354,6 +354,75 @@
 .merchant-wide {
   grid-column: 1 / -1;
 }
+.merchant-image-upload {
+  border: 1px dashed #cbdaf0;
+  border-radius: 8px;
+  padding: 18px;
+  background: #f8fbff;
+}
+.merchant-image-upload > label {
+  font-weight: 600;
+  color: #43668b;
+}
+.merchant-image-upload-body {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 14px;
+}
+.merchant-image-preview {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  background: white;
+  border: 1px solid #e1e9f4;
+  border-radius: 8px;
+  padding: 8px;
+}
+.merchant-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.merchant-image-upload-body > div:last-child {
+  min-width: 0;
+}
+.merchant-image-upload-body p {
+  margin: 0 0 10px;
+  font-weight: 600;
+  color: #43668b;
+}
+.merchant-form .merchant-image-upload input[type='file'] {
+  padding: 8px;
+  background: white;
+  font-size: 12px;
+  max-width: 100%;
+}
+.merchant-image-upload input::file-selector-button {
+  border: 0;
+  border-radius: 4px;
+  background: #e4efff;
+  color: #006bc8;
+  padding: 8px 12px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.merchant-image-upload small {
+  display: block;
+  font-size: 11px;
+  color: #8391a4;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+.merchant-image-filename {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 500px) {
+  .merchant-image-upload-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 .merchant-check {
   display: flex;
   align-items: center;

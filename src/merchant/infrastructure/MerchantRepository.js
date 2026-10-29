@@ -1,5 +1,6 @@
 const SHOPS = 'crediflow.merchant.shops.v1';
 const PRODUCTS = 'crediflow.merchant.products.v1';
+import { isStoredProductImage } from '../application/productImage.js';
 export class MerchantRepository {
   constructor(storage, getSession) {
     this.storage = storage;
@@ -86,8 +87,12 @@ export class MerchantRepository {
     if (!Number.isInteger(stock) || stock < 0 || stock > 1000000)
       throw new Error('El stock debe ser un número entero entre 0 y 1 000 000.');
     const imageUrl = String(input.imageUrl || '/catalog/groceries.svg');
-    if (!imageUrl.startsWith('/catalog/') && !/^https:\/\//.test(imageUrl))
-      throw new Error('Usa una imagen del catálogo o una dirección HTTPS.');
+    if (
+      !imageUrl.startsWith('/catalog/') &&
+      !/^https:\/\//.test(imageUrl) &&
+      !isStoredProductImage(imageUrl)
+    )
+      throw new Error('Sube una imagen JPG, PNG o WebP válida.');
     const product = {
       id: existing?.id || crypto.randomUUID(),
       storeId: user.id,
@@ -105,10 +110,16 @@ export class MerchantRepository {
       demo: false,
       updatedAt: new Date().toISOString(),
     };
-    this.storage.setItem(
-      PRODUCTS,
-      JSON.stringify([...products.filter((item) => item.id !== product.id), product]),
-    );
+    try {
+      this.storage.setItem(
+        PRODUCTS,
+        JSON.stringify([...products.filter((item) => item.id !== product.id), product]),
+      );
+    } catch {
+      throw new Error(
+        'No se pudo guardar el producto. El almacenamiento del navegador puede estar lleno; prueba con una imagen más pequeña.',
+      );
+    }
     return product;
   }
   publicStores(fallback = []) {

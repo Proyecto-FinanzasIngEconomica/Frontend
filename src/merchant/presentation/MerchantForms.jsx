@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ProductImageUpload } from './ProductImageUpload.jsx';
 
 export function MerchantShopForm({ shop, repository, onSaved }) {
   const [values, setValues] = useState(shop);
@@ -103,6 +104,7 @@ export function MerchantShopForm({ shop, repository, onSaved }) {
 }
 
 export function MerchantProductForm({ product, repository, onSaved, onCancel }) {
+  const [imageBusy, setImageBusy] = useState(false);
   const [values, setValues] = useState(
     product || {
       name: '',
@@ -127,6 +129,7 @@ export function MerchantProductForm({ product, repository, onSaved, onCancel }) 
       className="merchant-panel merchant-form"
       onSubmit={(event) => {
         event.preventDefault();
+        if (imageBusy) return;
         try {
           onSaved(repository.saveProduct(values));
         } catch (err) {
@@ -188,34 +191,11 @@ export function MerchantProductForm({ product, repository, onSaved, onCancel }) 
             onChange={update}
           />
         </label>
-        <label className="merchant-wide">
-          Imagen del producto
-          <select
-            name="imageUrl"
-            value={values.imageUrl.startsWith('/catalog/') ? values.imageUrl : 'custom'}
-            onChange={(event) =>
-              setValues((old) => ({
-                ...old,
-                imageUrl: event.target.value === 'custom' ? 'https://' : event.target.value,
-              }))
-            }
-          >
-            <option value="/catalog/groceries.svg">Abarrotes / general</option>
-            <option value="/catalog/laptop.svg">Laptop</option>
-            <option value="/catalog/tablet.svg">Tablet</option>
-            <option value="custom">Dirección HTTPS personalizada</option>
-          </select>
-          {!values.imageUrl.startsWith('/catalog/') && (
-            <input
-              name="imageUrl"
-              type="url"
-              required
-              value={values.imageUrl}
-              onChange={update}
-              placeholder="https://…"
-            />
-          )}
-        </label>
+        <ProductImageUpload
+          value={values.imageUrl}
+          onChange={(imageUrl) => setValues((old) => ({ ...old, imageUrl }))}
+          onBusy={setImageBusy}
+        />
       </div>
       <div className="merchant-checks">
         <label className="merchant-check">
@@ -241,8 +221,8 @@ export function MerchantProductForm({ product, repository, onSaved, onCancel }) 
         <button type="button" className="secondary-button" onClick={onCancel}>
           Cancelar
         </button>
-        <button type="submit" className="primary-button">
-          Guardar producto
+        <button type="submit" className="primary-button" disabled={imageBusy}>
+          {imageBusy ? 'Preparando imagen…' : 'Guardar producto'}
         </button>
       </footer>
     </form>

@@ -67,6 +67,17 @@ test('solo publica productos activos y con stock; rechaza datos inválidos', () 
   assert.throws(() => repo.saveProduct({ ...product, imageUrl: 'javascript:alert(1)' }));
   assert.throws(() => repo.saveShop({ ...shopData, ruc: '123' }));
 });
+test('una foto subida persiste y se conserva al editar el producto y cargar el catálogo', () => {
+  const { repo, storage, seller } = setup();
+  repo.saveShop(shopData);
+  const imageUrl = 'data:image/jpeg;base64,/9j/AAAA';
+  const saved = repo.saveProduct({ ...product, imageUrl });
+  const reloaded = new MerchantRepository(storage, () => ({ user: seller }));
+  assert.equal(reloaded.products()[0].imageUrl, imageUrl);
+  reloaded.saveProduct({ ...saved, name: 'Laptop actualizada' });
+  assert.equal(reloaded.publicProducts(seller.id)[0].imageUrl, imageUrl);
+  assert.throws(() => repo.saveProduct({ ...product, imageUrl: 'data:image/svg+xml;base64,AAAA' }));
+});
 test('un vendedor no puede modificar los productos de otra tienda y un cliente no puede administrarlos', () => {
   const { repo, storage } = setup();
   const item = repo.saveProduct(product);
