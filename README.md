@@ -1,6 +1,6 @@
 # CrediFlow · Frontend
 
-React + Vite y JavaScript. Primera entrega: acceso responsive, sin autenticación ficticia.
+React, Vite y JavaScript. Acceso por usuario y contraseña, alta administrada y paneles por rol conectados a Spring y MySQL. Consulta la [guía de integración](docs/backend-integration.md) para iniciar el backend y recorrer el flujo.
 
 ## Desarrollo
 
@@ -36,9 +36,23 @@ Las dependencias apuntan hacia domain/application. No se agregan entidades de ti
 
 - `main`: base estable y entregas aprobadas.
 - `develop`: integración de avances revisados.
-- `feature/<avance>`: cada avance parte de `develop` y se revisa antes de integrar.
+- `feature/<vista>`: agrupa todos los cambios de una vista o funcionalidad; reutiliza la rama para sus ajustes. Integra las dependencias revisadas en `develop` antes de abrir una vista independiente.
 - `release/<version>` y `hotfix/<correccion>` cuando sean necesarios.
 
 Ejemplo: `feature/01-access-screen`. No integrar automáticamente en main/develop: usar revisión y PR.
 
-Consulta [el contrato de integración](docs/backend-integration.md) antes de habilitar la API de identidad. La interfaz nunca se conecta directamente a MySQL/PostgreSQL ni guarda contraseñas o tokens en almacenamiento web.
+Consulta [el contrato de integración](docs/backend-integration.md) antes de habilitar la API de identidad. La interfaz nunca se conecta directamente a MySQL/PostgreSQL. El modo local guarda perfiles, contraseñas derivadas (hash y sal), sesión e historial únicamente en este navegador; usa datos de prueba. No guarda contraseñas originales.
+
+## Probar el avance 06
+
+1. Abre «Solicitar una cuenta», elige cliente o vendedor y registra datos de prueba con un correo único.
+2. Inicia sesión con ese correo y contraseña. Se abrirá el dashboard de esa cuenta.
+3. Recarga: la sesión se mantiene. Revisa «Mi actividad» desde el perfil o «Revisar mis accesos».
+4. Pulsa «Cerrar sesión» y vuelve a entrar para comprobar las entradas y salidas.
+5. Para ver tiendas, registra primero una cuenta de vendedor en este mismo navegador/origen. El catálogo de productos aún está vacío.
+
+`VITE_IDENTITY_PROVIDER=local` selecciona el adaptador temporal. Cuentas y sesiones no se comparten entre navegadores. Cerrar la pestaña no cierra sesión. Elimina datos del sitio para reiniciar las pruebas; esto borra sus cuentas locales.
+
+## Catálogo
+
+«Tiendas y productos» abre negocios con imágenes y descripciones. Selecciona una tienda para ver sus productos y utiliza búsqueda/categorías. Los ejemplos se identifican y se pueden ocultar. Las tiendas registradas localmente aparecen con una ilustración y descripción iniciales. Comprar/simular muestran el detalle del próximo flujo, sin realizar operaciones.

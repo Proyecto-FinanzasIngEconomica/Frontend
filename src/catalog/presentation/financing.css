@@ -1,0 +1,239 @@
+.financing-page {
+  max-width: 1100px;
+  margin: auto;
+  color: #303640;
+}
+.financing-page .purchase-breadcrumb {
+  margin-bottom: 10px;
+}
+.financing-page .purchase-breadcrumb strong {
+  color: #006bc8;
+}
+.financing-page > h1 {
+  font-size: 28px;
+  letter-spacing: -0.7px;
+  margin: 0 0 8px;
+}
+.financing-intro {
+  font-size: 13px;
+  color: #596171;
+  margin: 0 0 24px;
+}
+.financing-product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px;
+  background: white;
+  border-radius: 7px 7px 0 0;
+  border-bottom: 2px solid #0878d5;
+  box-shadow: 0 2px 4px #233a5710;
+  margin-bottom: 24px;
+}
+.financing-product small {
+  display: block;
+  font-size: 10px;
+  color: #677080;
+  letter-spacing: 0.6px;
+  margin-bottom: 4px;
+}
+.financing-product strong {
+  display: block;
+  font-size: 14px;
+}
+.financing-product-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: #d7e5ff;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.financing-product-icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+.financing-amount {
+  margin-left: auto;
+  text-align: right;
+}
+.financing-amount strong {
+  color: #006bc8;
+  font-size: 19px;
+  white-space: nowrap;
+}
+.financing-form {
+  max-width: 800px;
+  margin: auto;
+  padding: 28px;
+  border-radius: 7px;
+  background: white;
+  box-shadow: 0 2px 4px #233a5710;
+}
+.financing-form header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid #e9edf4;
+}
+.financing-form h2 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  margin: 0;
+}
+.financing-customer {
+  font-size: 11px;
+  color: #596171;
+  text-align: right;
+}
+.financing-page > h1:focus,
+.financing-result h2:focus {
+  outline: none;
+}
+.financing-form h2 svg {
+  color: #006bc8;
+}
+.financing-form fieldset {
+  border: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.financing-form legend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+.financing-form legend > span {
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #d9e7ff;
+  color: #006bc8;
+}
+.financing-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.financing-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #f1f4fa;
+  border-radius: 3px;
+  padding: 10px;
+  min-width: 0;
+}
+.financing-field > span {
+  font-size: 10px;
+  color: #606978;
+  margin-bottom: 4px;
+}
+.financing-field > strong {
+  font-size: 18px;
+}
+.financing-field input,
+.financing-field select {
+  background: transparent;
+  border: 0;
+  color: #303640;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  min-height: 23px;
+}
+.financing-field input:focus-visible,
+.financing-field select:focus-visible {
+  outline: 2px solid #0074e0;
+  outline-offset: 3px;
+}
+.financing-input-unit {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.financing-input-unit span {
+  white-space: nowrap;
+  font-size: 11px;
+  color: #596171;
+}
+.financing-field small {
+  font-size: 10px;
+  color: #7c8491;
+  margin-top: 7px;
+  line-height: 1.5;
+}
+.financing-field.disabled {
+  opacity: 0.6;
+}
+.financing-form footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 22px;
+  border-top: 1px solid #e9edf4;
+}
+.financing-form footer button {
+  min-height: 38px;
+  font-size: 12px;
+}
+.financing-error {
+  color: #aa2330;
+  font-size: 13px;
+}
+.financing-result {
+  margin-top: 24px;
+  padding: 18px;
+  background: #f1f6ff;
+  border-radius: 6px;
+}
+.financing-result dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.financing-result dt,
+.financing-result p {
+  color: #596171;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.financing-result dd {
+  margin: 4px 0 0;
+  font-weight: 600;
+  color: #006bc8;
+}
+@media (max-width: 600px) {
+  .financing-form {
+    padding: 18px;
+  }
+  .financing-columns {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .financing-product {
+    flex-wrap: wrap;
+  }
+  .financing-form footer {
+    flex-wrap: wrap;
+  }
+  .financing-page > h1 {
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,62 @@
+.backend-panel {
+  padding: 1.5rem;
+}
+.backend-panel h1,
+.backend-panel h2 {
+  margin: 0 0 1rem;
+}
+.backend-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.backend-actions button,
+.backend-detail button {
+  padding: 0.45rem 0.75rem;
+}
+.backend-table {
+  overflow-x: auto;
+  margin-block: 1rem;
+}
+.backend-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.backend-table th,
+.backend-table td {
+  padding: 0.7rem;
+  border-bottom: 1px solid #dde4e8;
+}
+.backend-form,
+.backend-detail {
+  margin-block: 1rem;
+  padding: 1rem;
+  border: 1px solid #dde4e8;
+  border-radius: 0.75rem;
+}
+.backend-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+.backend-form label {
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+}
+.backend-form input,
+.backend-form select {
+  padding: 0.5rem;
+  min-width: 0;
+}
+.backend-form input[type='checkbox'] {
+  justify-self: start;
+}
+.backend-panel [role='alert'] {
+  color: #9c2121;
+}

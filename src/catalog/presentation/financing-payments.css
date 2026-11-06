@@ -1,0 +1,95 @@
+.installment-summary {
+  margin: 24px 0;
+}
+.installment-summary dl {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  margin: 0;
+  padding: 24px;
+}
+.installment-summary dd {
+  font-weight: 650;
+}
+.installment-summary small {
+  font-size: 10px;
+  color: #677080;
+  display: block;
+  margin-top: 7px;
+}
+.installment-next {
+  background: #f0f5ff;
+  padding: 10px;
+  margin: -10px;
+  border-radius: 4px;
+}
+.installment-next dd {
+  color: #006bc8;
+}
+.financing-schedule .installment-first {
+  background: #edf5ff;
+}
+.installment-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+}
+.installment-actions button {
+  font-size: 13px;
+  min-height: 42px;
+}
+.installment-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.installment-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  background: #f1f4fa;
+  padding: 22px;
+  border-radius: 5px;
+}
+.installment-details dt {
+  font-size: 12px;
+  color: #677080;
+  margin-bottom: 8px;
+}
+.installment-details dd {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+.installment-payment h1:focus {
+  outline: none;
+}
+.installment-channel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #006bc8;
+  font-size: 13px;
+  margin: 24px 0;
+}
+.installment-channel select {
+  padding: 13px;
+  border: 1px solid #dce5f2;
+  border-radius: 5px;
+  color: #303640;
+  background: white;
+}
+@media (max-width: 1000px) {
+  .installment-summary dl {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 28px;
+  }
+}
+@media (max-width: 560px) {
+  .installment-summary dl {
+    grid-template-columns: 1fr 1fr;
+  }
+  .installment-actions {
+    flex-direction: column-reverse;
+  }
+}

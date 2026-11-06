@@ -1,0 +1,244 @@
+.confirm-financing {
+  max-width: 880px;
+  margin: auto;
+  color: #303640;
+}
+.confirm-financing .purchase-breadcrumb strong {
+  color: #006bc8;
+}
+.confirm-financing > h1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  margin: 0 0 8px;
+}
+.confirm-financing > h1 svg {
+  color: #006bc8;
+}
+.confirm-financing > h1:focus {
+  outline: none;
+}
+.confirm-financing-intro {
+  font-size: 13px;
+  color: #596171;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+.confirm-financing-card {
+  max-width: 760px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 5px;
+  border-top: 4px solid #006bc8;
+  box-shadow: 0 2px 5px #233a5714;
+}
+.confirm-financing-product {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 0 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e9edf4;
+}
+.confirm-financing-product small {
+  display: block;
+  font-size: 11px;
+  color: #677080;
+  margin-bottom: 5px;
+}
+.confirm-financing-product strong {
+  font-size: 15px;
+  line-height: 1.6;
+}
+.confirm-financing-icon {
+  display: grid;
+  place-items: center;
+  background: #edf2fa;
+  width: 56px;
+  height: 56px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.confirm-financing-icon img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+.confirm-financing-amount {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
+}
+.confirm-financing-amount strong {
+  color: #006bc8;
+  font-size: 20px;
+}
+.confirm-financing-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  margin: 0 0 16px;
+  font-weight: 500;
+}
+.confirm-contract dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  background: #f6f8fd;
+  border-radius: 4px;
+  padding: 18px;
+  margin: 0 0 28px;
+}
+.confirm-contract dt {
+  font-size: 11px;
+  color: #677080;
+  margin-bottom: 6px;
+}
+.confirm-contract dd {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+.confirm-breakdown {
+  background: #f1f4fa;
+  border-radius: 6px;
+  padding: 22px;
+  margin-bottom: 28px;
+}
+.confirm-breakdown header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #e9edf4;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+}
+.confirm-breakdown header h2 {
+  color: #006bc8;
+  margin: 0;
+}
+.confirm-breakdown header > small {
+  font-size: 10px;
+  color: #677080;
+  white-space: nowrap;
+}
+.confirm-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.confirm-metrics > div {
+  background: white;
+  border-radius: 4px;
+  padding: 15px;
+}
+.confirm-metrics span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #677080;
+  font-size: 11px;
+}
+.confirm-metrics strong {
+  display: block;
+  color: #006bc8;
+  font-size: 23px;
+  margin: 8px 0;
+  font-variant-numeric: tabular-nums;
+}
+.confirm-metrics > div:nth-child(2) strong {
+  color: #303640;
+}
+.confirm-metrics > div:nth-child(3) strong {
+  color: #456fd1;
+}
+.confirm-metrics small {
+  color: #677080;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.confirm-share-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 10px;
+  color: #677080;
+  margin: 22px 0 8px;
+}
+.confirm-breakdown > p {
+  font-size: 11px;
+  color: #677080;
+  margin: 14px 0 0;
+}
+.confirm-acceptance {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f6f8fd;
+  padding: 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.6;
+  cursor: pointer;
+}
+.confirm-acceptance input {
+  accent-color: #006bc8;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin: 0;
+}
+.confirm-financing-note {
+  color: #677080;
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 14px 0 22px;
+}
+.confirm-financing-card footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-top: 1px solid #e9edf4;
+  padding-top: 18px;
+}
+.confirm-financing-card footer button {
+  font-size: 12px;
+  min-height: 40px;
+}
+.confirm-financing-card button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+@media (max-width: 700px) {
+  .confirm-financing-card {
+    padding: 20px;
+  }
+  .confirm-contract dl {
+    grid-template-columns: 1fr 1fr;
+  }
+  .confirm-metrics {
+    grid-template-columns: 1fr;
+  }
+  .confirm-breakdown {
+    padding: 16px;
+  }
+  .confirm-financing-product {
+    flex-wrap: wrap;
+  }
+  .confirm-share-labels {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 440px) {
+  .confirm-financing-card footer {
+    flex-direction: column-reverse;
+  }
+  .confirm-breakdown header {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,231 @@
+.profile-page {
+  max-width: 1200px;
+  margin: auto;
+  color: #303640;
+}
+.profile-page .purchase-breadcrumb {
+  margin-bottom: 28px;
+}
+.profile-page .purchase-breadcrumb strong {
+  color: #006bc8;
+}
+.profile-page > h1 {
+  position: relative;
+  padding-left: 16px;
+  font-size: 30px;
+  letter-spacing: -0.8px;
+  margin: 0 0 10px;
+}
+.profile-page > h1::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 6px;
+  height: 30px;
+  background: #006bc8;
+  border-radius: 4px;
+}
+.profile-page > h1:focus {
+  outline: none;
+}
+.profile-intro {
+  font-size: 14px;
+  color: #677080;
+  margin: 0 0 26px;
+}
+.profile-banner {
+  background: white;
+  border-radius: 9px;
+  box-shadow: 0 2px 3px #233a5708;
+  padding: 26px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+.profile-initials {
+  width: 80px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #d7e5ff;
+  color: #006bc8;
+  font-size: 25px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.profile-banner h2 {
+  font-size: 21px;
+  margin: 0 0 10px;
+}
+.profile-banner p {
+  font-size: 13px;
+  margin: 0;
+  color: #677080;
+}
+.profile-credit {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  background: #f1f4fa;
+  border-radius: 5px;
+}
+.profile-credit svg {
+  color: #006bc8;
+}
+.profile-credit small {
+  display: block;
+  font-size: 10px;
+  color: #677080;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.profile-credit strong {
+  font-size: 15px;
+  color: #006bc8;
+}
+.profile-columns {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 26px;
+  align-items: start;
+}
+.profile-information,
+.profile-security {
+  padding: 26px;
+  background: white;
+  border-radius: 9px;
+  box-shadow: 0 2px 3px #233a5708;
+}
+.profile-information header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.profile-information h2 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+.profile-information h2 svg {
+  color: #006bc8;
+}
+.profile-information header p {
+  font-size: 12px;
+  color: #677080;
+  margin: 0;
+}
+.profile-information header button {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.profile-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.profile-fields label {
+  font-size: 12px;
+  color: #596171;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.profile-fields input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dce5f2;
+  border-radius: 4px;
+  background: white;
+  padding: 11px;
+  font: inherit;
+  color: #303640;
+}
+.profile-fields input[readonly] {
+  border-color: transparent;
+  background: #f0f3fa;
+  color: #596171;
+}
+.profile-fields input:focus-visible {
+  outline: 2px solid #006bc8;
+  outline-offset: 2px;
+}
+.profile-security {
+  text-align: center;
+}
+.profile-signout {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  border: 0;
+  color: #df2838;
+  background: none;
+  padding: 18px 0;
+  font-size: 14px;
+}
+.profile-security p,
+.profile-note {
+  color: #677080;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.profile-security .text-button {
+  font-size: 12px;
+}
+.profile-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+.profile-edit-actions button {
+  font-size: 12px;
+}
+.profile-message {
+  color: #1b7855;
+  font-size: 13px;
+}
+.profile-error {
+  color: #b22939;
+  font-size: 13px;
+}
+.profile-back {
+  border: 0;
+  color: #006bc8;
+  background: none;
+  padding: 0;
+  margin: 36px 12px 0;
+  font-size: 14px;
+}
+@media (max-width: 850px) {
+  .profile-columns {
+    grid-template-columns: 1fr;
+  }
+  .profile-banner {
+    flex-wrap: wrap;
+  }
+  .profile-credit {
+    margin-left: 0;
+  }
+}
+@media (max-width: 500px) {
+  .profile-fields {
+    grid-template-columns: 1fr;
+  }
+  .profile-information header {
+    flex-wrap: wrap;
+  }
+  .profile-information,
+  .profile-security {
+    padding: 20px;
+  }
+}

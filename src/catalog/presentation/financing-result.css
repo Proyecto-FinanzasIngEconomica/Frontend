@@ -1,0 +1,223 @@
+.financing-outcome {
+  max-width: 1200px;
+  margin: auto;
+  color: #303640;
+}
+.financing-outcome-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #006bc8;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+.financing-outcome h1 {
+  font-size: 30px;
+  letter-spacing: -0.7px;
+  margin: 8px 0;
+}
+.financing-outcome h1:focus {
+  outline: none;
+}
+.financing-outcome-intro {
+  color: #596171;
+  font-size: 13px;
+  margin: 0 0 24px;
+}
+.financing-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 28px;
+  align-items: start;
+}
+.financing-outcome-panel {
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 2px 4px #233a5710;
+  overflow: hidden;
+}
+.financing-outcome-panel > header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: #f0f3fa;
+}
+.financing-outcome-panel header > svg {
+  color: #006bc8;
+  background: #dce9ff;
+  padding: 4px;
+  width: 30px;
+  height: 30px;
+}
+.financing-outcome h2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.financing-outcome-panel header p {
+  margin: 0;
+  font-size: 11px;
+  color: #677080;
+}
+.financing-outcome-panel header > small {
+  margin-left: auto;
+  font-size: 10px;
+  color: #677080;
+  white-space: nowrap;
+}
+.financing-conditions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 24px;
+  margin: 0;
+}
+.financing-outcome dt {
+  color: #677080;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+.financing-outcome dd {
+  margin: 0;
+  font-size: 14px;
+}
+.financing-summary-body {
+  padding: 24px;
+}
+.financing-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1.2fr;
+  gap: 14px;
+  margin: 0 0 28px;
+}
+.financing-metrics dd {
+  font-size: 18px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.financing-outcome .blue {
+  color: #006bc8;
+  font-weight: 650;
+}
+.financing-share {
+  display: flex;
+  height: 7px;
+  background: #5479dd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.financing-share span {
+  background: #0065bc;
+}
+.financing-share-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 10px;
+  color: #677080;
+}
+.financing-outcome-panel > footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f1f6ff;
+  padding: 12px 24px;
+  font-size: 10px;
+  color: #006bc8;
+}
+.financing-schedule > header {
+  background: white;
+}
+.financing-schedule h2 svg {
+  color: #006bc8;
+}
+.financing-table-scroll {
+  overflow-x: auto;
+}
+.financing-schedule table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 900px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.financing-schedule th {
+  font-size: 10px;
+  text-transform: uppercase;
+  text-align: right;
+  background: #e9edf5;
+  color: #586170;
+  padding: 18px 14px;
+}
+.financing-schedule td {
+  padding: 14px;
+  text-align: right;
+  white-space: nowrap;
+}
+.financing-schedule th:nth-child(-n + 2),
+.financing-schedule td:nth-child(-n + 2) {
+  text-align: left;
+}
+.financing-schedule tbody tr:nth-child(even) {
+  background: #fafbfe;
+}
+.financing-schedule tfoot {
+  border-top: 1px solid #e3e8f1;
+  background: #f0f3fa;
+  font-weight: 600;
+}
+.financing-schedule tfoot th {
+  text-transform: none;
+  font-size: 12px;
+  background: transparent;
+}
+.financing-row-status {
+  background: #edf0f6;
+  color: #657080;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 15px;
+}
+.financing-row-status.grace {
+  background: #fff0dc;
+  color: #956326;
+}
+.financing-outcome-note {
+  font-size: 11px;
+  color: #677080;
+  line-height: 1.7;
+  margin: 18px 0;
+}
+.financing-outcome-actions {
+  display: flex;
+  gap: 10px;
+}
+.financing-outcome-actions button {
+  font-size: 13px;
+  min-height: 40px;
+}
+@media (max-width: 1000px) {
+  .financing-overview {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .financing-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  .financing-outcome h1 {
+    font-size: 25px;
+  }
+  .financing-outcome-panel > footer {
+    flex-direction: column;
+  }
+  .financing-outcome-actions {
+    flex-direction: column;
+  }
+}
