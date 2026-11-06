@@ -3,7 +3,7 @@ import { Icon } from '../../shared/presentation/Icon.jsx';
 import { AuthLayout } from '../../shared/presentation/AuthLayout.jsx';
 import { HelpDialog } from '../../shared/presentation/HelpDialog.jsx';
 
-export function LoginPage({ signIn, onSignedIn, notice }) {
+export function LoginPage({ signIn, onSignedIn, notice, usernameLogin = false }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false);
@@ -57,7 +57,7 @@ export function LoginPage({ signIn, onSignedIn, notice }) {
             <p>
               {session
                 ? `Bienvenido, ${session.user.email || 'usuario'}.`
-                : 'Ingresa con tu correo y contraseña para acceder a tu cuenta.'}
+                : `Ingresa con tu ${usernameLogin ? 'usuario' : 'correo'} y contraseña para acceder a tu cuenta.`}
             </p>
           </div>
 
@@ -81,7 +81,7 @@ export function LoginPage({ signIn, onSignedIn, notice }) {
               )}
               <div className="form-field">
                 <div className="label-row">
-                  <label htmlFor="email">Correo electrónico</label>
+                  <label htmlFor="email">{usernameLogin ? 'Usuario' : 'Correo electrónico'}</label>
                   <span>Requerido</span>
                 </div>
                 <div className={`input-wrap ${errors.email ? 'invalid' : ''}`}>
@@ -90,13 +90,13 @@ export function LoginPage({ signIn, onSignedIn, notice }) {
                     ref={emailRef}
                     id="email"
                     name="email"
-                    autoComplete="email"
-                    type="email"
+                    autoComplete={usernameLogin ? 'username' : 'email'}
+                    type={usernameLogin ? 'text' : 'email'}
                     autoCapitalize="none"
                     spellCheck="false"
-                    maxLength={100}
+                    maxLength={usernameLogin ? 50 : 100}
                     required
-                    placeholder="tu@correo.com"
+                    placeholder={usernameLogin ? 'Ingresa tu usuario' : 'tu@correo.com'}
                     value={email}
                     disabled={pending}
                     aria-invalid={Boolean(errors.email)}

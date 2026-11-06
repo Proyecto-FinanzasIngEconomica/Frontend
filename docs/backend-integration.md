@@ -1,3 +1,27 @@
+# Conexión actual con Spring y MySQL
+
+La aplicación usa la API real de Spring. Vite reenvía las solicitudes de /api al puerto 8080 por defecto. Spring configura el acceso a MySQL con JDBC y persiste los datos mediante JPA. Los datos de la demo guardados en el navegador no se importan a MySQL.
+
+## Arranque local
+
+1. Inicia MySQL y crea o selecciona una base de datos para CrediFlow. Configura las credenciales y la URL JDBC en las variables de entorno SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD y SPRING_DATASOURCE_URL del proceso de Spring.
+2. En la carpeta store-credit-management, ejecuta `mvn spring-boot:run` con JDK 25 y Maven instalado. El proyecto recibido no contiene el archivo de configuración del Maven Wrapper. Para configurar el administrador inicial y la firma JWT puedes usar CREDIFLOW_ADMIN_USERNAME, CREDIFLOW_ADMIN_PASSWORD y CREDIFLOW_JWT_SECRET con SPRING_PROFILES_ACTIVE=local. El inicializador crea el administrador solo si todavía no existe.
+3. En la carpeta del frontend, ejecuta `npm ci` y `npm run dev`. Abre http://localhost:5173. Si Spring está en otro puerto, copia .env.example a .env.local y modifica API_PROXY_TARGET.
+
+## Flujo de pantallas
+
+1. Ingresa con el usuario del administrador del sistema. En Tiendas, registra la tienda y el usuario del vendedor.
+2. Ingresa como vendedor. Registra un producto, luego un cliente y su usuario en Clientes. La condición de crédito se asigna al cliente en esa misma pestaña.
+3. En Compras y financiamientos, registra una compra a crédito con los ID del cliente y del producto. Spring calcula el cronograma.
+4. Cuando el corte ya haya pasado, genera el estado de cuenta. En Historial de pagos, registra el importe recibido y el ID del estado de cuenta. Spring valida el importe y registra el pago.
+5. Ingresa como cliente. Consulta el catálogo de tu tienda, el perfil, la línea de crédito, las compras, los estados de cuenta y los pagos. Usa Ver detalle para consultar el cronograma o el desglose.
+
+El modelo actual vincula cada cliente a una tienda. El alta es administrada y el portal del cliente es de consulta. El flujo de tarjeta, pago al contado y simulación local del prototipo queda fuera de la navegación activa. El JWT se mantiene en memoria y se requiere iniciar sesión al recargar.
+
+## Historial del prototipo
+
+Los apartados siguientes documentan el frontend de demostración y contratos anteriores.
+
 # Integración con el backend recibido
 
 Revisión estática del archivo `backend-main.zip` facilitado el 28 de octubre de 2026. No se ejecutó el backend ni se verificó una base de datos activa. Esta revisión no modifica su código ni certifica su seguridad.
