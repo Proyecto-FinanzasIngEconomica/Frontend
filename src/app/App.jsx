@@ -1,70 +1,60 @@
 import { useEffect, useState } from 'react';
 import { LoginPage } from '../identity/presentation/LoginPage.jsx';
-import { RegisterPage } from '../identity/presentation/RegisterPage.jsx';
-import { DashboardPage } from '../dashboard/presentation/DashboardPage.jsx';
-import { signIn, registerAccount, identity, localMode } from './dependencies.js';
-import { MerchantDashboard } from '../merchant/presentation/MerchantDashboard.jsx';
+import { AuthLayout } from '../shared/presentation/AuthLayout.jsx';
+import { BackendDashboard } from './BackendDashboard.jsx';
+import { signIn, signOut } from './backendSession.js';
 
 export function App() {
   const [hash, setHash] = useState(window.location.hash);
-  const [session, setSession] = useState(() => {
-    try {
-      return identity.getSession();
-    } catch {
-      return null;
-    }
-  });
+  const [session, setSession] = useState(null);
   const [notice, setNotice] = useState('');
+
+  function endSession(message) {
+    signOut();
+    setSession(null);
+    setNotice(message);
+    window.location.hash = '/ingresar';
+  }
+
   useEffect(() => {
     const update = () => setHash(window.location.hash);
-    const sync = () => {
-      try {
-        setSession(identity.getSession());
-      } catch {
-        setSession(null);
-      }
-    };
     window.addEventListener('hashchange', update);
-    window.addEventListener('storage', sync);
-    return () => {
-      window.removeEventListener('hashchange', update);
-      window.removeEventListener('storage', sync);
-    };
+    return () => window.removeEventListener('hashchange', update);
   }, []);
-  const registration = hash === '#/registro' && !session;
+
   useEffect(() => {
-    document.title = `${session ? 'Inicio' : registration ? 'Crear cuenta' : 'Iniciar sesión'} · CrediFlow`;
-    window.scrollTo(0, 0);
-  }, [registration, session]);
-  const SignedInPage = session?.user.accountType === 'SELLER' ? MerchantDashboard : DashboardPage;
-  if (session)
+    if (!session?.expiresAt) return;
+    const delay = Math.max(0, Date.parse(session.expiresAt) - Date.now());
+    const timeout = setTimeout(() => endSession('Tu sesión venció. Ingresa nuevamente.'), delay);
+    return () => clearTimeout(timeout);
+  }, [session]);
+
+  if (session) {
     return (
-      <SignedInPage
-        session={session}
-        identity={identity}
-        localMode={localMode}
-        onSignOut={() => {
-          try {
-            identity.signOut();
-          } finally {
-            setSession(null);
-            window.location.hash = '/ingresar';
-            setNotice('Has cerrado sesión.');
-          }
-        }}
-      />
+      <BackendDashboard user={session.user} onSignOut={() => endSession('Has cerrado sesión.')} />
     );
-  return registration ? (
-    <RegisterPage
-      registerAccount={registerAccount}
-      localMode={localMode}
-      onRegistered={(email) => {
-        setNotice(`Cuenta creada para ${email}. Ya puedes iniciar sesión.`);
-        window.location.hash = '/ingresar';
-      }}
-    />
-  ) : (
+  }
+
+  if (hash === '#/registro') {
+    return (
+      <AuthLayout>
+        <main id="main-content" className="login-main">
+          <section className="login-card">
+            <h1>Solicitar una cuenta</h1>
+            <p>Para abrir una tienda, solicita el alta al administrador de CrediFlow.</p>
+            <p>Si eres cliente, solicita a tu tienda que habilite tu usuario.</p>
+            <a className="text-button" href="#/ingresar">
+              Volver a iniciar sesión
+            </a>
+          </section>
+        </main>
+      </AuthLayout>
+    );
+  }
+
+  return (
     <LoginPage
+      usernameLogin
       signIn={signIn}
       notice={notice}
       onSignedIn={(result) => {

@@ -1,6 +1,6 @@
 # CrediFlow · Frontend
 
-React + Vite y JavaScript. Acceso por correo y contraseña, registro de vendedor/cliente y dashboard responsive. Identidad local temporal para pruebas, reemplazable por el backend.
+React, Vite y JavaScript. Acceso por usuario y contraseña, alta administrada y paneles por rol conectados a Spring y MySQL. Consulta la [guía de integración](docs/backend-integration.md) para iniciar el backend y recorrer el flujo.
 
 ## Desarrollo
 
